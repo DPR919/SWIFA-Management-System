@@ -21,5 +21,10 @@ namespace SWIFA_Management_System
         {
 
         }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

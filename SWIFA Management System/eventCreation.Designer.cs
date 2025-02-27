@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             label1 = new Label();
+            label2 = new Label();
+            textBox1 = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -41,11 +43,31 @@
             label1.Text = "You are creating an event.";
             label1.Click += label1_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Font = new Font("Segoe UI", 14F);
+            label2.Location = new Point(12, 44);
+            label2.Name = "label2";
+            label2.Size = new Size(180, 38);
+            label2.TabIndex = 1;
+            label2.Text = "Event Name: ";
+            // 
+            // textBox1
+            // 
+            textBox1.Location = new Point(198, 52);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(150, 31);
+            textBox1.TabIndex = 2;
+            textBox1.TextChanged += textBox1_TextChanged;
+            // 
             // eventCreation
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox1);
+            Controls.Add(label2);
             Controls.Add(label1);
             Name = "eventCreation";
             Text = "Create an Event";
@@ -56,5 +78,7 @@
         #endregion
 
         private Label label1;
+        private Label label2;
+        private TextBox textBox1;
     }
 }
