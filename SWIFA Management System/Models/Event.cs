@@ -10,4 +10,7 @@ public partial class Event
     public string EventName { get; set; } = null!;
 
     public DateTime EventDate { get; set; }
+
+    public string EventLocation { get; set; } = null!;
+    public bool Current { get; set; }
 }

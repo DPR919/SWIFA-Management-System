@@ -34,6 +34,9 @@
             label3 = new Label();
             dateTimePicker1 = new DateTimePicker();
             save_button = new Button();
+            label4 = new Label();
+            label5 = new Label();
+            textBox2 = new TextBox();
             SuspendLayout();
             // 
             // label1
@@ -84,7 +87,7 @@
             // 
             // save_button
             // 
-            save_button.Location = new Point(12, 212);
+            save_button.Location = new Point(12, 259);
             save_button.Name = "save_button";
             save_button.Size = new Size(112, 34);
             save_button.TabIndex = 5;
@@ -92,11 +95,41 @@
             save_button.UseVisualStyleBackColor = true;
             save_button.Click += saveButton_Click;
             // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(29, 206);
+            label4.Name = "label4";
+            label4.Size = new Size(0, 25);
+            label4.TabIndex = 6;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Font = new Font("Segoe UI", 14F);
+            label5.Location = new Point(12, 193);
+            label5.Name = "label5";
+            label5.Size = new Size(210, 38);
+            label5.TabIndex = 7;
+            label5.Text = "Event Location: ";
+            label5.Click += label5_Click;
+            // 
+            // textBox2
+            // 
+            textBox2.Location = new Point(228, 201);
+            textBox2.Name = "textBox2";
+            textBox2.Size = new Size(150, 31);
+            textBox2.TabIndex = 8;
+            textBox2.TextChanged += textBox2_TextChanged;
+            // 
             // eventCreation
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(textBox2);
+            Controls.Add(label5);
+            Controls.Add(label4);
             Controls.Add(save_button);
             Controls.Add(dateTimePicker1);
             Controls.Add(label3);
@@ -117,5 +150,8 @@
         private Label label3;
         private DateTimePicker dateTimePicker1;
         private Button save_button;
+        private Label label4;
+        private Label label5;
+        private TextBox textBox2;
     }
 }

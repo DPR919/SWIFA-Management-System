@@ -37,11 +37,14 @@ namespace SWIFA_Management_System
         {
             string eventName = textBox1.Text;
             DateTime eventDate = dateTimePicker1.Value;
+            string eventLocation = textBox2.Text;
 
             var newEvent = new Event
             {
                 EventName = eventName,
-                EventDate = eventDate
+                EventDate = eventDate,
+                EventLocation = eventLocation,
+                Current = true
             };
 
             using (var db = new EventsDatabaseContext())
@@ -51,6 +54,16 @@ namespace SWIFA_Management_System
             }
 
             MessageBox.Show("Event created successfully!");
+        }
+
+        private void label5_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
