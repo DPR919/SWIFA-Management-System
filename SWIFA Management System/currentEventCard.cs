@@ -7,12 +7,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using SWIFA_Management_System.Models;
 
 namespace SWIFA_Management_System
 {
-    public partial class EventCard : UserControl
+    public partial class currentEventCard : UserControl
     {
-        public EventCard()
+        public int EventID { get; set; }
+        public currentEventCard()
         {
             InitializeComponent();
         }
@@ -21,6 +23,19 @@ namespace SWIFA_Management_System
         {
 
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            using (var db = new EventsDatabaseContext())
+            {
+                var ev = db.Events.Find(EventID);
+                ev.Current = false;
+                db.SaveChanges();
+            }
+            this.Parent.Controls.Remove(this);
+            MessageBox.Show("Event has been removed from the list of ongoing events.");
+        }
+        
 
         public string EventName
         {
