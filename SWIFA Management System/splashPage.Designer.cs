@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(splashPage));
             label1 = new Label();
             button1 = new Button();
             button2 = new Button();
@@ -38,6 +39,7 @@
             // 
             // label1
             // 
+            label1.Anchor = AnchorStyles.None;
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 27F);
             label1.Location = new Point(52, 24);
@@ -50,8 +52,9 @@
             // 
             // button1
             // 
+            button1.Anchor = AnchorStyles.None;
             button1.AutoSize = true;
-            button1.Location = new Point(308, 128);
+            button1.Location = new Point(312, 128);
             button1.Name = "button1";
             button1.Size = new Size(177, 35);
             button1.TabIndex = 1;
@@ -61,6 +64,7 @@
             // 
             // button2
             // 
+            button2.Anchor = AnchorStyles.None;
             button2.AutoSize = true;
             button2.Location = new Point(285, 186);
             button2.Name = "button2";
@@ -72,8 +76,9 @@
             // 
             // button3
             // 
+            button3.Anchor = AnchorStyles.None;
             button3.AutoSize = true;
-            button3.Location = new Point(303, 244);
+            button3.Location = new Point(312, 244);
             button3.Name = "button3";
             button3.Size = new Size(177, 35);
             button3.TabIndex = 3;
@@ -83,8 +88,9 @@
             // 
             // pictureBox1
             // 
-            pictureBox1.Image = Properties.Resources.SWIFA_Color_Export_Small;
-            pictureBox1.Location = new Point(303, 308);
+            pictureBox1.Anchor = AnchorStyles.None;
+            pictureBox1.Image = Properties.Resources.SWIFA_Black_Base_Export_Small;
+            pictureBox1.Location = new Point(303, 304);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Size = new Size(195, 119);
             pictureBox1.SizeMode = PictureBoxSizeMode.Zoom;
@@ -95,12 +101,14 @@
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
+            AutoSize = true;
             ClientSize = new Size(800, 450);
             Controls.Add(pictureBox1);
             Controls.Add(button3);
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label1);
+            Icon = (Icon)resources.GetObject("$this.Icon");
             Name = "splashPage";
             Text = "SWIFA Management System";
             Load += Form1_Load;

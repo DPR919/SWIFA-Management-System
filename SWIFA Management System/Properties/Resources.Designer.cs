@@ -63,6 +63,16 @@ namespace SWIFA_Management_System.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap SWIFA_Black_Base_Export_Small {
+            get {
+                object obj = ResourceManager.GetObject("SWIFA Black_Base_Export Small", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap SWIFA_Color_Export_Small {
             get {
                 object obj = ResourceManager.GetObject("SWIFA Color_Export Small", resourceCulture);
