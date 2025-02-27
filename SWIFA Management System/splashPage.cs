@@ -24,12 +24,12 @@ namespace SWIFA_Management_System
         {
             eventCreation eventCreation = new eventCreation();
             eventCreation.Show();
-            //this.Hide();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            currentEvents currentEvents = new currentEvents();
+            currentEvents.Show();
         }
 
         private void button3_Click(object sender, EventArgs e)
