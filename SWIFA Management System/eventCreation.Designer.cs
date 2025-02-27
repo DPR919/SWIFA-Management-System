@@ -31,6 +31,9 @@
             label1 = new Label();
             label2 = new Label();
             textBox1 = new TextBox();
+            label3 = new Label();
+            dateTimePicker1 = new DateTimePicker();
+            save_button = new Button();
             SuspendLayout();
             // 
             // label1
@@ -61,11 +64,42 @@
             textBox1.TabIndex = 2;
             textBox1.TextChanged += textBox1_TextChanged;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Font = new Font("Segoe UI", 14F);
+            label3.Location = new Point(12, 122);
+            label3.Name = "label3";
+            label3.Size = new Size(164, 38);
+            label3.TabIndex = 3;
+            label3.Text = "Event Date: ";
+            // 
+            // dateTimePicker1
+            // 
+            dateTimePicker1.Location = new Point(182, 128);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(300, 31);
+            dateTimePicker1.TabIndex = 4;
+            dateTimePicker1.ValueChanged += dateTimePicker1_ValueChanged;
+            // 
+            // save_button
+            // 
+            save_button.Location = new Point(12, 212);
+            save_button.Name = "save_button";
+            save_button.Size = new Size(112, 34);
+            save_button.TabIndex = 5;
+            save_button.Text = "Create";
+            save_button.UseVisualStyleBackColor = true;
+            save_button.Click += saveButton_Click;
+            // 
             // eventCreation
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(save_button);
+            Controls.Add(dateTimePicker1);
+            Controls.Add(label3);
             Controls.Add(textBox1);
             Controls.Add(label2);
             Controls.Add(label1);
@@ -80,5 +114,8 @@
         private Label label1;
         private Label label2;
         private TextBox textBox1;
+        private Label label3;
+        private DateTimePicker dateTimePicker1;
+        private Button save_button;
     }
 }
