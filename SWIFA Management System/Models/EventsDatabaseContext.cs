@@ -17,6 +17,9 @@ public partial class EventsDatabaseContext : DbContext
     }
 
     public virtual DbSet<Event> Events { get; set; }
+    public virtual DbSet<Team> Teams { get; set; }
+
+    public virtual DbSet<School> Schools { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -42,6 +45,23 @@ public partial class EventsDatabaseContext : DbContext
 
             entity.Property(e => e.EventDate).HasColumnType("datetime");
             entity.Property(e => e.EventName).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<Team>(entity => {
+            entity.HasKey(e => e.TeamId).HasName("PK__Teams__3214EC077AFE1625");
+            entity.Property(e => e.School).HasMaxLength(100);
+            entity.Property(e => e.suffix).HasMaxLength(100);
+            entity.Property(e => e.Blade).HasMaxLength(100);
+            entity.Property(e => e.AFencer).HasMaxLength(100);
+            entity.Property(e => e.BFencer).HasMaxLength(100);
+            entity.Property(e => e.CFencer).HasMaxLength(100);
+            entity.Property(e => e.AltFencer).HasMaxLength(100);
+        });
+
+        modelBuilder.Entity<School>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Schools__3214EC077AFE1625");
+            entity.Property(e => e.SchoolName).HasMaxLength(100);
         });
 
         OnModelCreatingPartial(modelBuilder);

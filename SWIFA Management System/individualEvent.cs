@@ -24,7 +24,8 @@ namespace SWIFA_Management_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-
+            var form = new teamRegistration();
+            form.Show();
         }
 
         private void button2_Click(object sender, EventArgs e)

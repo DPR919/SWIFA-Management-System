@@ -14,3 +14,29 @@ public partial class Event
     public string EventLocation { get; set; } = null!;
     public bool Current { get; set; }
 }
+
+
+public partial class Team
+{
+    public int TeamId { get; set; }
+
+    public string School { get; set; }
+
+    public string suffix { get; set; }
+
+    public string Blade { get; set; }
+
+    public string AFencer { get; set; }
+
+    public string BFencer { get; set; }
+
+    public string CFencer { get; set; }
+
+    public string AltFencer { get; set; }
+}
+
+public partial class School
+{
+    public int Id { get; set; }
+    public string SchoolName { get; set; }
+}
