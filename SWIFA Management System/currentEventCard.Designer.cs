@@ -32,6 +32,7 @@
             label2 = new Label();
             label3 = new Label();
             button1 = new Button();
+            button2 = new Button();
             SuspendLayout();
             // 
             // label1
@@ -67,7 +68,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(3, 184);
+            button1.Location = new Point(250, 184);
             button1.Name = "button1";
             button1.Size = new Size(177, 34);
             button1.TabIndex = 3;
@@ -75,17 +76,29 @@
             button1.UseVisualStyleBackColor = true;
             button1.Click += button1_Click;
             // 
-            // EventCard
+            // button2
+            // 
+            button2.AutoSize = true;
+            button2.Location = new Point(3, 184);
+            button2.Name = "button2";
+            button2.Size = new Size(134, 35);
+            button2.TabIndex = 4;
+            button2.Text = "Manage Event";
+            button2.UseVisualStyleBackColor = true;
+            button2.Click += button2_Click;
+            // 
+            // currentEventCard
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = SystemColors.ControlDark;
+            Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(label1);
             Margin = new Padding(10);
-            Name = "EventCard";
+            Name = "currentEventCard";
             Size = new Size(430, 221);
             ResumeLayout(false);
             PerformLayout();
@@ -97,5 +110,6 @@
         private Label label2;
         private Label label3;
         private Button button1;
+        private Button button2;
     }
 }

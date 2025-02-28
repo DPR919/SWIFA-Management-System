@@ -35,7 +35,17 @@ namespace SWIFA_Management_System
             this.Parent.Controls.Remove(this);
             MessageBox.Show("Event has been removed from the list of ongoing events.");
         }
-        
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var form = new individualEvent();
+
+            string summary = $"{this.EventName} - {this.EventLocation} - {this.EventDate.ToShortDateString()}";
+
+            form.SetSummary(summary);
+
+            form.Show();
+        }
 
         public string EventName
         {
