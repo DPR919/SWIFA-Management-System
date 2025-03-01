@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 namespace SWIFA_Management_System
 {
     public partial class splashPage : Form
@@ -38,6 +40,22 @@ namespace SWIFA_Management_System
             pastEvents.Show();
         }
 
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            string url = "https://pschimelman.wixsite.com/swifa";
 
+            try
+            {
+                Process.Start(new ProcessStartInfo
+                {
+                    FileName = url,
+                    UseShellExecute = true
+                });
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Failed to open url: " + ex.Message);
+            }
+        }
     }
 }
