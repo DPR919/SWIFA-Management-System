@@ -45,23 +45,43 @@ namespace SWIFA_Management_System
             using (var db = new EventsDatabaseContext())
             {
                 var foilTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Foil")
-                    .Select(t => t.School + " " + t.suffix)
-                    .ToList();
+                    .Where(t => t.EventId == _eventId && t.Blade == "Foil").ToList();
+                listBoxFoil.DataSource = foilTeams;
 
                 var epeeTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Epee")
-                    .Select(t => t.School + " " + t.suffix)
-                    .ToList();
+                    .Where(t => t.EventId == _eventId && t.Blade == "Epee").ToList();
+                listBoxEpee.DataSource = epeeTeams;
 
                 var sabreTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Sabre")
-                    .Select(t => t.School + " " + t.suffix)
-                    .ToList();
-
-                listBoxFoil.DataSource = foilTeams;
-                listBoxEpee.DataSource = epeeTeams;
+                    .Where(t => t.EventId == _eventId && t.Blade == "Sabre").ToList();
                 listBoxSabre.DataSource = sabreTeams;
+            }
+        }
+
+        private void listBoxFoil_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxFoil.SelectedItem is Team selectedTeam)
+            {
+                var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.Show();
+            }
+        }
+
+        private void listBoxEpee_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxEpee.SelectedItem is Team selectedTeam)
+            {
+                var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.Show();
+            }
+        }
+
+        private void listBoxSabre_DoubleClick(object sender, EventArgs e)
+        {
+            if (listBoxSabre.SelectedItem is Team selectedTeam)
+            {
+                var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.Show();
             }
         }
     }

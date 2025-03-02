@@ -35,6 +35,11 @@ public partial class Team
     public string AltFencer { get; set; }
 
     public int EventId { get; set; }
+
+    public override string ToString()
+    {
+        return School + " " + suffix;
+    }
 }
 
 public partial class School

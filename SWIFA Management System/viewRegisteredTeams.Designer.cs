@@ -76,6 +76,7 @@
             listBoxFoil.Size = new Size(227, 379);
             listBoxFoil.TabIndex = 3;
             listBoxFoil.SelectedIndexChanged += listBoxFoil_SelectedIndexChanged;
+            listBoxFoil.DoubleClick += listBoxFoil_DoubleClick;
             // 
             // listBoxEpee
             // 
@@ -86,6 +87,7 @@
             listBoxEpee.Size = new Size(227, 379);
             listBoxEpee.TabIndex = 4;
             listBoxEpee.SelectedIndexChanged += listBoxEpee_SelectedIndexChanged;
+            listBoxEpee.DoubleClick += listBoxEpee_DoubleClick;
             // 
             // listBoxSabre
             // 
@@ -96,6 +98,7 @@
             listBoxSabre.Size = new Size(227, 379);
             listBoxSabre.TabIndex = 5;
             listBoxSabre.SelectedIndexChanged += listBoxSabre_SelectedIndexChanged;
+            listBoxSabre.DoubleClick += listBoxSabre_DoubleClick;
             // 
             // viewRegisteredTeams
             // 

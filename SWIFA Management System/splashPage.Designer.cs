@@ -68,9 +68,9 @@
             button2.AutoSize = true;
             button2.Location = new Point(285, 186);
             button2.Name = "button2";
-            button2.Size = new Size(231, 35);
+            button2.Size = new Size(237, 35);
             button2.TabIndex = 2;
-            button2.Text = "Update An Ongoing Event";
+            button2.Text = "Manage An Ongoing Event";
             button2.UseVisualStyleBackColor = true;
             button2.Click += button2_Click;
             // 
