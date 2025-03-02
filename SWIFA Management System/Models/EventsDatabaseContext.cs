@@ -56,6 +56,7 @@ public partial class EventsDatabaseContext : DbContext
             entity.Property(e => e.BFencer).HasMaxLength(100);
             entity.Property(e => e.CFencer).HasMaxLength(100);
             entity.Property(e => e.AltFencer).HasMaxLength(100);
+            entity.Property(e => e.EventId).IsRequired();
         });
 
         modelBuilder.Entity<School>(entity =>
