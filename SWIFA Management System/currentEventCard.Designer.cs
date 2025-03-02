@@ -100,6 +100,7 @@
             Margin = new Padding(10);
             Name = "currentEventCard";
             Size = new Size(430, 221);
+            Load += currentEventCard_Load;
             ResumeLayout(false);
             PerformLayout();
         }

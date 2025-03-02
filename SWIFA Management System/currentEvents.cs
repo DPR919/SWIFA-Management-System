@@ -31,7 +31,7 @@ namespace SWIFA_Management_System
                 {
                     var card = new currentEventCard
                     {
-                        EventID = ev.Id,
+                        EvntId = ev.Id,
                         EventName = ev.EventName,
                         EventDate = ev.EventDate,
                         EventLocation = ev.EventLocation

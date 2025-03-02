@@ -12,9 +12,11 @@ namespace SWIFA_Management_System
 {
     public partial class individualEvent : Form
     {
-        public individualEvent()
+        public int EvntId { get; private set; }
+        public individualEvent(int evntId)
         {
             InitializeComponent();
+            EvntId = evntId;
         }
 
         public void SetSummary(string summary)
@@ -24,7 +26,7 @@ namespace SWIFA_Management_System
 
         private void button1_Click(object sender, EventArgs e)
         {
-            var form = new teamRegistration();
+            var form = new teamRegistration(EvntId);
             form.Show();
         }
 
@@ -34,6 +36,11 @@ namespace SWIFA_Management_System
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void individualEvent_Load(object sender, EventArgs e)
         {
 
         }

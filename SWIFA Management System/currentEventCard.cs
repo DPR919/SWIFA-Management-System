@@ -8,12 +8,13 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using SWIFA_Management_System.Models;
+using Microsoft.Extensions.Logging;
 
 namespace SWIFA_Management_System
 {
     public partial class currentEventCard : UserControl
     {
-        public int EventID { get; set; }
+        public int EvntId { get; set; }
         public currentEventCard()
         {
             InitializeComponent();
@@ -28,7 +29,7 @@ namespace SWIFA_Management_System
         {
             using (var db = new EventsDatabaseContext())
             {
-                var ev = db.Events.Find(EventID);
+                var ev = db.Events.Find(EvntId);
                 ev.Current = false;
                 db.SaveChanges();
             }
@@ -38,13 +39,18 @@ namespace SWIFA_Management_System
 
         private void button2_Click(object sender, EventArgs e)
         {
-            var form = new individualEvent();
+            var form = new individualEvent(EvntId);
 
             string summary = $"{this.EventName} - {this.EventLocation} - {this.EventDate.ToShortDateString()}";
 
             form.SetSummary(summary);
 
             form.Show();
+        }
+
+        private void currentEventCard_Load(object sender, EventArgs e)
+        {
+
         }
 
         public string EventName

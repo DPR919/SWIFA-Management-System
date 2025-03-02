@@ -88,6 +88,7 @@
             Controls.Add(button1);
             Name = "individualEvent";
             Text = "individualEvent";
+            Load += individualEvent_Load;
             ResumeLayout(false);
             PerformLayout();
         }

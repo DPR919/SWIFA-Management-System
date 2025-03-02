@@ -13,9 +13,11 @@ namespace SWIFA_Management_System
 {
     public partial class teamRegistration : Form
     {
-        public teamRegistration()
+        public int EvntId { get; private set; }
+        public teamRegistration(int eventId)
         {
             InitializeComponent();
+            EvntId = eventId;
             LoadSchoolsIntoComboBox();
         }
 
@@ -82,7 +84,8 @@ namespace SWIFA_Management_System
                 AFencer = aFencer,
                 BFencer = bFencer,
                 CFencer = cFencer,
-                AltFencer = altFencer
+                AltFencer = altFencer,
+                EventId = this.EvntId
             };
 
             using (var db = new EventsDatabaseContext())
