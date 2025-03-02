@@ -38,7 +38,7 @@
             // button1
             // 
             button1.AutoSize = true;
-            button1.Location = new Point(245, 9);
+            button1.Location = new Point(12, 44);
             button1.Name = "button1";
             button1.Size = new Size(267, 76);
             button1.TabIndex = 0;
@@ -60,7 +60,7 @@
             // button2
             // 
             button2.AutoSize = true;
-            button2.Location = new Point(521, 216);
+            button2.Location = new Point(285, 44);
             button2.Name = "button2";
             button2.Size = new Size(267, 76);
             button2.TabIndex = 4;
@@ -71,7 +71,7 @@
             // button3
             // 
             button3.AutoSize = true;
-            button3.Location = new Point(521, 114);
+            button3.Location = new Point(12, 208);
             button3.Name = "button3";
             button3.Size = new Size(267, 76);
             button3.TabIndex = 5;
@@ -81,7 +81,7 @@
             // button4
             // 
             button4.AutoSize = true;
-            button4.Location = new Point(521, 9);
+            button4.Location = new Point(12, 126);
             button4.Name = "button4";
             button4.Size = new Size(267, 76);
             button4.TabIndex = 6;

@@ -29,10 +29,10 @@
         private void InitializeComponent()
         {
             teamName = new Label();
-            label1 = new Label();
-            label2 = new Label();
-            label3 = new Label();
-            label4 = new Label();
+            AFencer = new Label();
+            BFencer = new Label();
+            CFencer = new Label();
+            AltFencer = new Label();
             SuspendLayout();
             // 
             // teamName
@@ -45,55 +45,55 @@
             teamName.TabIndex = 0;
             teamName.Text = "teamName";
             // 
-            // label1
+            // AFencer
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 80);
-            label1.Name = "label1";
-            label1.Size = new Size(78, 32);
-            label1.TabIndex = 1;
-            label1.Text = "label1";
+            AFencer.AutoSize = true;
+            AFencer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AFencer.Location = new Point(12, 80);
+            AFencer.Name = "AFencer";
+            AFencer.Size = new Size(78, 32);
+            AFencer.TabIndex = 1;
+            AFencer.Text = "label1";
             // 
-            // label2
+            // BFencer
             // 
-            label2.AutoSize = true;
-            label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(12, 147);
-            label2.Name = "label2";
-            label2.Size = new Size(78, 32);
-            label2.TabIndex = 2;
-            label2.Text = "label2";
+            BFencer.AutoSize = true;
+            BFencer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            BFencer.Location = new Point(12, 147);
+            BFencer.Name = "BFencer";
+            BFencer.Size = new Size(78, 32);
+            BFencer.TabIndex = 2;
+            BFencer.Text = "label2";
             // 
-            // label3
+            // CFencer
             // 
-            label3.AutoSize = true;
-            label3.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label3.Location = new Point(12, 214);
-            label3.Name = "label3";
-            label3.Size = new Size(78, 32);
-            label3.TabIndex = 3;
-            label3.Text = "label3";
+            CFencer.AutoSize = true;
+            CFencer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            CFencer.Location = new Point(12, 214);
+            CFencer.Name = "CFencer";
+            CFencer.Size = new Size(78, 32);
+            CFencer.TabIndex = 3;
+            CFencer.Text = "label3";
             // 
-            // label4
+            // AltFencer
             // 
-            label4.AutoSize = true;
-            label4.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label4.Location = new Point(12, 281);
-            label4.Name = "label4";
-            label4.Size = new Size(78, 32);
-            label4.TabIndex = 4;
-            label4.Text = "label4";
+            AltFencer.AutoSize = true;
+            AltFencer.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            AltFencer.Location = new Point(12, 281);
+            AltFencer.Name = "AltFencer";
+            AltFencer.Size = new Size(78, 32);
+            AltFencer.TabIndex = 4;
+            AltFencer.Text = "label4";
             // 
             // teamDetails
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(label4);
-            Controls.Add(label3);
-            Controls.Add(label2);
-            Controls.Add(label1);
+            Controls.Add(AltFencer);
+            Controls.Add(CFencer);
+            Controls.Add(BFencer);
+            Controls.Add(AFencer);
             Controls.Add(teamName);
             Name = "teamDetails";
             Text = "teamDetails";
@@ -105,9 +105,9 @@
         #endregion
 
         private Label teamName;
-        private Label label1;
-        private Label label2;
-        private Label label3;
-        private Label label4;
+        private Label AFencer;
+        private Label BFencer;
+        private Label CFencer;
+        private Label AltFencer;
     }
 }

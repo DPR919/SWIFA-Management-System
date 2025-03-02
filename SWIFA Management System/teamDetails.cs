@@ -22,7 +22,18 @@ namespace SWIFA_Management_System
 
         private void teamDetails_Load(object sender, EventArgs e)
         {
-
+            if (_team != null)
+            {
+                teamName.Text = _team.ToString();
+                AFencer.Text = _team.AFencer;
+                BFencer.Text = _team.BFencer;
+                CFencer.Text = _team.CFencer;
+                AltFencer.Text = _team.AltFencer;
+            } else
+            {
+                MessageBox.Show("No team data was provided.");
+                this.Close();
+            }
         }
     }
 }
