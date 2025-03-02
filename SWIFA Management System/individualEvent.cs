@@ -44,5 +44,11 @@ namespace SWIFA_Management_System
         {
 
         }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            var viewTeams = new viewRegisteredTeams(this.EvntId);
+            viewTeams.Show();
+        }
     }
 }
