@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWIFA Management System", "SWIFA Management System\SWIFA Management System.csproj", "{015A39C7-BB21-4E54-A9C3-14A077517425}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SWIFA_Management_System", "SWIFA Management System\SWIFA_Management_System.csproj", "{015A39C7-BB21-4E54-A9C3-14A077517425}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
