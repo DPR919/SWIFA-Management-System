@@ -36,6 +36,10 @@
             BFencer = new TextBox();
             CFencer = new TextBox();
             AltFencer = new TextBox();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
+            label5 = new Label();
             SuspendLayout();
             // 
             // teamName
@@ -82,37 +86,77 @@
             // 
             // AFencer
             // 
-            AFencer.Location = new Point(12, 68);
+            AFencer.Location = new Point(12, 94);
             AFencer.Name = "AFencer";
             AFencer.Size = new Size(150, 31);
             AFencer.TabIndex = 8;
             // 
             // BFencer
             // 
-            BFencer.Location = new Point(12, 140);
+            BFencer.Location = new Point(12, 166);
             BFencer.Name = "BFencer";
             BFencer.Size = new Size(150, 31);
             BFencer.TabIndex = 9;
             // 
             // CFencer
             // 
-            CFencer.Location = new Point(12, 212);
+            CFencer.Location = new Point(12, 238);
             CFencer.Name = "CFencer";
             CFencer.Size = new Size(150, 31);
             CFencer.TabIndex = 10;
             // 
             // AltFencer
             // 
-            AltFencer.Location = new Point(12, 284);
+            AltFencer.Location = new Point(12, 310);
             AltFencer.Name = "AltFencer";
             AltFencer.Size = new Size(150, 31);
             AltFencer.TabIndex = 11;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(12, 68);
+            label2.Name = "label2";
+            label2.Size = new Size(80, 25);
+            label2.TabIndex = 12;
+            label2.Text = "A Fencer";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(12, 138);
+            label3.Name = "label3";
+            label3.Size = new Size(78, 25);
+            label3.TabIndex = 13;
+            label3.Text = "B Fencer";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(12, 210);
+            label4.Name = "label4";
+            label4.Size = new Size(79, 25);
+            label4.TabIndex = 14;
+            label4.Text = "C Fencer";
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(12, 282);
+            label5.Name = "label5";
+            label5.Size = new Size(90, 25);
+            label5.TabIndex = 15;
+            label5.Text = "Alt Fencer";
             // 
             // teamDetails
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label5);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
             Controls.Add(AltFencer);
             Controls.Add(CFencer);
             Controls.Add(BFencer);
@@ -138,5 +182,9 @@
         private TextBox BFencer;
         private TextBox CFencer;
         private TextBox AltFencer;
+        private Label label2;
+        private Label label3;
+        private Label label4;
+        private Label label5;
     }
 }
