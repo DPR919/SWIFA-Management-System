@@ -45,15 +45,15 @@ namespace SWIFA_Management_System
             using (var db = new EventsDatabaseContext())
             {
                 var foilTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Foil").ToList();
+                    .Where(t => t.EventId == _eventId && t.Blade == "Foil").OrderBy(t=>t.School).ThenBy(t=>t.suffix).ToList();
                 listBoxFoil.DataSource = foilTeams;
 
                 var epeeTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Epee").ToList();
+                    .Where(t => t.EventId == _eventId && t.Blade == "Epee").OrderBy(t=>t.School).ThenBy(t=>t.suffix).ToList();
                 listBoxEpee.DataSource = epeeTeams;
 
                 var sabreTeams = db.Teams
-                    .Where(t => t.EventId == _eventId && t.Blade == "Sabre").ToList();
+                    .Where(t => t.EventId == _eventId && t.Blade == "Sabre").OrderBy(t=>t.School).ThenBy(t=>t.suffix).ToList();
                 listBoxSabre.DataSource = sabreTeams;
             }
         }

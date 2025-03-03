@@ -50,5 +50,11 @@ namespace SWIFA_Management_System
             var viewTeams = new viewRegisteredTeams(this.EvntId);
             viewTeams.Show();
         }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            var poolGen = new poolGeneration(this.EvntId);
+            poolGen.Show();
+        }
     }
 }
