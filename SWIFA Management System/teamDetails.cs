@@ -86,13 +86,29 @@ namespace SWIFA_Management_System
             }
             else if (editButton.Text == "Save")
             {
-                editButton.Text = "Edit";
-                deleteButton.Visible = true;
-                // write to database
+                _team.AFencer = AFencer.Text;
+                _team.BFencer = BFencer.Text;
+                _team.CFencer = CFencer.Text;
+                _team.AltFencer = AltFencer.Text;
+
+                using (var db = new EventsDatabaseContext())
+                {
+                    var dbTeam = db.Teams.Find(_team.TeamId);
+                    if (dbTeam != null)
+                    {
+                        dbTeam.AFencer = _team.AFencer;
+                        dbTeam.BFencer = _team.BFencer;
+                        dbTeam.CFencer = _team.CFencer;
+                        dbTeam.AltFencer = _team.AltFencer;
+                        db.SaveChanges();
+                    }
+                }
                 AFencer.ReadOnly = true;
                 BFencer.ReadOnly = true;
                 CFencer.ReadOnly = true;
                 AltFencer.ReadOnly = true;
+                editButton.Text = "Edit";
+                deleteButton.Visible = true;
             }
         }
     }
