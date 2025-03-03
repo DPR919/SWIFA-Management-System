@@ -44,6 +44,7 @@
             teamName.Size = new Size(132, 32);
             teamName.TabIndex = 0;
             teamName.Text = "teamName";
+            teamName.Click += teamName_Click;
             // 
             // AFencer
             // 

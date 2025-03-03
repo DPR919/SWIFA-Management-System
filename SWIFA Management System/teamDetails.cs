@@ -24,16 +24,23 @@ namespace SWIFA_Management_System
         {
             if (_team != null)
             {
+                teamName.UseMnemonic = false;
                 teamName.Text = _team.ToString();
                 AFencer.Text = _team.AFencer;
                 BFencer.Text = _team.BFencer;
                 CFencer.Text = _team.CFencer;
                 AltFencer.Text = _team.AltFencer;
-            } else
+            }
+            else
             {
                 MessageBox.Show("No team data was provided.");
                 this.Close();
             }
+        }
+
+        private void teamName_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
