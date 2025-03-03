@@ -13,6 +13,7 @@ namespace SWIFA_Management_System
 {
     public partial class teamDetails : Form
     {
+        public event Action TeamDeleted;
         private Team _team;
         public teamDetails(Team team)
         {
@@ -41,6 +42,28 @@ namespace SWIFA_Management_System
         private void teamName_Click(object sender, EventArgs e)
         {
 
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            using (var db = new EventsDatabaseContext())
+            {
+                var teamToDelete = db.Teams.Find(_team.TeamId);
+                if (teamToDelete != null)
+                {
+                    db.Teams.Remove(teamToDelete);
+                    db.SaveChanges();
+                    MessageBox.Show("Team deleted successfully.");
+                    this.Close();
+                }
+            }
+            TeamDeleted?.Invoke();
+            this.Close();
         }
     }
 }

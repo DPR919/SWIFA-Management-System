@@ -33,6 +33,9 @@
             BFencer = new Label();
             CFencer = new Label();
             AltFencer = new Label();
+            editButton = new Button();
+            deleteButton = new Button();
+            label1 = new Label();
             SuspendLayout();
             // 
             // teamName
@@ -86,11 +89,44 @@
             AltFencer.TabIndex = 4;
             AltFencer.Text = "label4";
             // 
+            // editButton
+            // 
+            editButton.Location = new Point(12, 381);
+            editButton.Name = "editButton";
+            editButton.Size = new Size(150, 57);
+            editButton.TabIndex = 5;
+            editButton.Text = "Edit";
+            editButton.UseVisualStyleBackColor = true;
+            // 
+            // deleteButton
+            // 
+            deleteButton.Location = new Point(168, 381);
+            deleteButton.Name = "deleteButton";
+            deleteButton.Size = new Size(150, 57);
+            deleteButton.TabIndex = 6;
+            deleteButton.Text = "Delete";
+            deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(290, 15);
+            label1.MaximumSize = new Size(500, 0);
+            label1.Name = "label1";
+            label1.Size = new Size(498, 50);
+            label1.TabIndex = 7;
+            label1.Text = "If you need to modify the team name, you need to delete the existing team and create a new one.";
+            label1.Click += label1_Click;
+            // 
             // teamDetails
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label1);
+            Controls.Add(deleteButton);
+            Controls.Add(editButton);
             Controls.Add(AltFencer);
             Controls.Add(CFencer);
             Controls.Add(BFencer);
@@ -110,5 +146,8 @@
         private Label BFencer;
         private Label CFencer;
         private Label AltFencer;
+        private Button editButton;
+        private Button deleteButton;
+        private Label label1;
     }
 }

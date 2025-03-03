@@ -63,6 +63,7 @@ namespace SWIFA_Management_System
             if (listBoxFoil.SelectedItem is Team selectedTeam)
             {
                 var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.TeamDeleted += OnTeamDeleted;
                 detailsForm.Show();
             }
         }
@@ -72,6 +73,7 @@ namespace SWIFA_Management_System
             if (listBoxEpee.SelectedItem is Team selectedTeam)
             {
                 var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.TeamDeleted += OnTeamDeleted;
                 detailsForm.Show();
             }
         }
@@ -81,8 +83,14 @@ namespace SWIFA_Management_System
             if (listBoxSabre.SelectedItem is Team selectedTeam)
             {
                 var detailsForm = new teamDetails(selectedTeam);
+                detailsForm.TeamDeleted += OnTeamDeleted;
                 detailsForm.Show();
             }
+        }
+
+        private void OnTeamDeleted()
+        {
+            viewRegisteredTeams_Load(this, EventArgs.Empty);
         }
     }
 }
