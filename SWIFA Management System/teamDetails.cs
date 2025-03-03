@@ -19,6 +19,7 @@ namespace SWIFA_Management_System
         {
             InitializeComponent();
             _team = team;
+            TeamDeleted += () => { };
         }
 
         private void teamDetails_Load(object sender, EventArgs e)
@@ -31,6 +32,11 @@ namespace SWIFA_Management_System
                 BFencer.Text = _team.BFencer;
                 CFencer.Text = _team.CFencer;
                 AltFencer.Text = _team.AltFencer;
+
+                AFencer.ReadOnly = true;
+                BFencer.ReadOnly = true;
+                CFencer.ReadOnly = true;
+                AltFencer.ReadOnly = true;
             }
             else
             {
@@ -64,6 +70,30 @@ namespace SWIFA_Management_System
             }
             TeamDeleted?.Invoke();
             this.Close();
+        }
+
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            if (editButton.Text == "Edit")
+            {
+                editButton.Text = "Save";
+                deleteButton.Visible = false;
+
+                AFencer.ReadOnly = false;
+                BFencer.ReadOnly = false;
+                CFencer.ReadOnly = false;
+                AltFencer.ReadOnly = false;
+            }
+            else if (editButton.Text == "Save")
+            {
+                editButton.Text = "Edit";
+                deleteButton.Visible = true;
+                // write to database
+                AFencer.ReadOnly = true;
+                BFencer.ReadOnly = true;
+                CFencer.ReadOnly = true;
+                AltFencer.ReadOnly = true;
+            }
         }
     }
 }
