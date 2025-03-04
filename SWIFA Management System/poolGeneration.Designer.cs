@@ -32,8 +32,9 @@
             bladeSelection = new ComboBox();
             label2 = new Label();
             label3 = new Label();
-            comboBox1 = new ComboBox();
+            numPoolSelection = new ComboBox();
             selectedBladeList = new ListBox();
+            poolsLayout = new TableLayoutPanel();
             SuspendLayout();
             // 
             // label1
@@ -76,14 +77,15 @@
             label3.TabIndex = 3;
             label3.Text = "pools";
             // 
-            // comboBox1
+            // numPoolSelection
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" });
-            comboBox1.Location = new Point(501, 12);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(96, 33);
-            comboBox1.TabIndex = 4;
+            numPoolSelection.FormattingEnabled = true;
+            numPoolSelection.Items.AddRange(new object[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" });
+            numPoolSelection.Location = new Point(501, 12);
+            numPoolSelection.Name = "numPoolSelection";
+            numPoolSelection.Size = new Size(96, 33);
+            numPoolSelection.TabIndex = 4;
+            numPoolSelection.SelectedIndexChanged += comboBox1_SelectedIndexChanged;
             // 
             // selectedBladeList
             // 
@@ -91,16 +93,33 @@
             selectedBladeList.ItemHeight = 25;
             selectedBladeList.Location = new Point(12, 44);
             selectedBladeList.Name = "selectedBladeList";
-            selectedBladeList.Size = new Size(180, 379);
+            selectedBladeList.Size = new Size(180, 279);
             selectedBladeList.TabIndex = 5;
+            selectedBladeList.MouseDown += selectedBladeList_MouseDown;
+            // 
+            // poolsLayout
+            // 
+            poolsLayout.ColumnCount = 3;
+            poolsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333321F));
+            poolsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            poolsLayout.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 33.3333359F));
+            poolsLayout.Location = new Point(198, 51);
+            poolsLayout.Name = "poolsLayout";
+            poolsLayout.RowCount = 3;
+            poolsLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            poolsLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            poolsLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
+            poolsLayout.Size = new Size(590, 372);
+            poolsLayout.TabIndex = 6;
             // 
             // poolGeneration
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(poolsLayout);
             Controls.Add(selectedBladeList);
-            Controls.Add(comboBox1);
+            Controls.Add(numPoolSelection);
             Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(bladeSelection);
@@ -118,7 +137,8 @@
         private ComboBox bladeSelection;
         private Label label2;
         private Label label3;
-        private ComboBox comboBox1;
+        private ComboBox numPoolSelection;
         private ListBox selectedBladeList;
+        private TableLayoutPanel poolsLayout;
     }
 }

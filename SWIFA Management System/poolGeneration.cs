@@ -14,6 +14,7 @@ namespace SWIFA_Management_System
     public partial class poolGeneration : Form
     {
         private int _eventId;
+        private List<ListBox> poolListBoxes = new List<ListBox>();
         public poolGeneration(int eventId)
         {
             InitializeComponent();
@@ -31,11 +32,80 @@ namespace SWIFA_Management_System
 
             using (var db = new EventsDatabaseContext())
             {
-                var teams = db.Teams.Where(t=>t.EventId==_eventId && t.Blade==selectedBlade)
-                    .OrderBy(t=>t.School).ThenBy(t=>t.suffix).ToList();
-                selectedBladeList.DataSource = teams;
+                var teams = db.Teams.Where(t => t.EventId == _eventId && t.Blade == selectedBlade)
+                    .OrderBy(t => t.School).ThenBy(t => t.suffix).ToList();
+                selectedBladeList.Items.Clear();
+                foreach (var team in teams)
+                {
+                    selectedBladeList.Items.Add(team);
+                }
             }
             selectedBladeList.Visible = true;
         }
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            foreach (var lb in poolListBoxes)
+            {
+                this.Controls.Remove(lb);
+                lb.Dispose();
+            }
+            poolListBoxes.Clear();
+
+            int poolCount = int.Parse(numPoolSelection.SelectedItem.ToString());
+
+            poolsLayout.Controls.Clear();
+
+            for (int i = 0; i < poolCount; i++)
+            {
+                var lb = new ListBox
+                {
+                    Dock = DockStyle.Fill
+                };
+                lb.AllowDrop = true;
+                lb.DragEnter += poolListBox_DragEnter;
+                lb.DragDrop += poolListBox_DragDrop;
+
+                int row = i / 3;
+                int col = i % 3;
+
+                poolsLayout.Controls.Add(lb, col, row);
+            }
+        }
+
+        private void selectedBladeList_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (selectedBladeList.SelectedItem != null)
+            {
+                DoDragDrop(selectedBladeList.SelectedItem, DragDropEffects.Move);
+            }
+        }
+
+        private void poolListBox_DragEnter(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(Team)))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
+            }
+        }
+
+        private void poolListBox_DragDrop(object sender, DragEventArgs e)
+        {
+            var targetListBox = (ListBox)sender;
+
+            var draggedItem = e.Data.GetData(typeof(Team)) as Team;
+
+            if (draggedItem != null)
+            {
+                targetListBox.Items.Add(draggedItem);
+
+                selectedBladeList.Items.Remove(draggedItem);
+            }
+        }
+
     }
 }
