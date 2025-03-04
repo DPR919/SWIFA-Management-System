@@ -15,6 +15,7 @@ namespace SWIFA_Management_System
     {
         private int _eventId;
         private List<ListBox> poolListBoxes = new List<ListBox>();
+        private ListBox currentDragSource;
         public poolGeneration(int eventId)
         {
             InitializeComponent();
@@ -65,6 +66,7 @@ namespace SWIFA_Management_System
                 lb.AllowDrop = true;
                 lb.DragEnter += poolListBox_DragEnter;
                 lb.DragDrop += poolListBox_DragDrop;
+                lb.MouseDown += poolListBox_MouseDown;
 
                 int row = i / 3;
                 int col = i % 3;
@@ -104,6 +106,20 @@ namespace SWIFA_Management_System
                 targetListBox.Items.Add(draggedItem);
 
                 selectedBladeList.Items.Remove(draggedItem);
+
+                if (currentDragSource != null && currentDragSource != targetListBox)
+                {
+                    currentDragSource.Items.Remove(draggedItem);
+                }
+            }
+        }
+
+        private void poolListBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            currentDragSource = (ListBox)sender;
+            if (currentDragSource.SelectedItem != null)
+            {
+                DoDragDrop(currentDragSource.SelectedItem, DragDropEffects.Move);
             }
         }
 
