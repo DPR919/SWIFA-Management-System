@@ -160,5 +160,10 @@ namespace SWIFA_Management_System
             }
             MessageBox.Show("Pools generated successfully");
         }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

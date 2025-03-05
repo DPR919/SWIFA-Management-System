@@ -47,6 +47,7 @@
             label1.Size = new Size(213, 32);
             label1.TabIndex = 0;
             label1.Text = "Generate pools for";
+            label1.Click += label1_Click;
             // 
             // bladeSelection
             // 

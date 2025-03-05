@@ -56,5 +56,11 @@ namespace SWIFA_Management_System
             var poolGen = new poolGeneration(this.EvntId);
             poolGen.Show();
         }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            var viewPools = new poolAssignments(this.EvntId);
+            viewPools.Show();
+        }
     }
 }
