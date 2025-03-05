@@ -35,6 +35,7 @@
             numPoolSelection = new ComboBox();
             selectedBladeList = new ListBox();
             poolsLayout = new TableLayoutPanel();
+            confirmButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -112,11 +113,22 @@
             poolsLayout.Size = new Size(590, 372);
             poolsLayout.TabIndex = 6;
             // 
+            // confirmButton
+            // 
+            confirmButton.Location = new Point(12, 372);
+            confirmButton.Name = "confirmButton";
+            confirmButton.Size = new Size(180, 51);
+            confirmButton.TabIndex = 7;
+            confirmButton.Text = "Confirm";
+            confirmButton.UseVisualStyleBackColor = true;
+            confirmButton.Click += confirmButton_Click;
+            // 
             // poolGeneration
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(confirmButton);
             Controls.Add(poolsLayout);
             Controls.Add(selectedBladeList);
             Controls.Add(numPoolSelection);
@@ -140,5 +152,6 @@
         private ComboBox numPoolSelection;
         private ListBox selectedBladeList;
         private TableLayoutPanel poolsLayout;
+        private Button confirmButton;
     }
 }

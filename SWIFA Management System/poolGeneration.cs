@@ -72,6 +72,7 @@ namespace SWIFA_Management_System
                 int col = i % 3;
 
                 poolsLayout.Controls.Add(lb, col, row);
+                poolListBoxes.Add(lb);
             }
         }
 
@@ -123,5 +124,41 @@ namespace SWIFA_Management_System
             }
         }
 
+        private void confirmButton_Click(object sender, EventArgs e)
+        {
+            using (var db = new EventsDatabaseContext())
+            {
+                for (int i = 0; i < poolListBoxes.Count; i++)
+                {
+                    var lb = poolListBoxes[i];
+                    var newPool = new Pool
+                    {
+                        Blade = bladeSelection.SelectedItem.ToString(),
+                        PoolNum = i + 1,
+                        EventId = _eventId
+                    };
+                    db.Pools.Add(newPool);
+                    db.SaveChanges();
+
+                    foreach (var item in lb.Items)
+                    {
+                        if (item is Team team)
+                        {
+                            var dbTeam = db.Teams.Find(team.TeamId);
+                            if (dbTeam != null)
+                            {
+                                dbTeam.PoolId = newPool.PoolId;
+                                db.SaveChanges();
+                            }
+                            else
+                            {
+                                MessageBox.Show("Error: Team not found in database");
+                            }
+                        }
+                    }
+                }
+            }
+            MessageBox.Show("Pools generated successfully");
+        }
     }
 }

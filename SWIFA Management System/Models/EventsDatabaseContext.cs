@@ -18,8 +18,8 @@ public partial class EventsDatabaseContext : DbContext
 
     public virtual DbSet<Event> Events { get; set; }
     public virtual DbSet<Team> Teams { get; set; }
-
     public virtual DbSet<School> Schools { get; set; }
+    public virtual DbSet<Pool> Pools { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
@@ -63,6 +63,13 @@ public partial class EventsDatabaseContext : DbContext
         {
             entity.HasKey(e => e.Id).HasName("PK__Schools__3214EC077AFE1625");
             entity.Property(e => e.SchoolName).HasMaxLength(100);
+        });
+        modelBuilder.Entity<Pool>(entity=>
+        {
+            entity.HasKey(e => e.PoolId).HasName("PK__Pools__3214EC077AFE1625");
+            entity.Property(e => e.Blade).HasMaxLength(100);
+            entity.Property(e => e.PoolNum).IsRequired();
+            entity.Property(e => e.EventId).IsRequired();
         });
 
         OnModelCreatingPartial(modelBuilder);

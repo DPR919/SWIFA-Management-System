@@ -36,6 +36,8 @@ public partial class Team
 
     public int EventId { get; set; }
 
+    public int PoolId { get; set; }
+
     public override string ToString()
     {
         return School + " " + suffix;
@@ -46,4 +48,12 @@ public partial class School
 {
     public int Id { get; set; }
     public string SchoolName { get; set; }
+}
+
+public partial class Pool
+{
+    public int PoolId { get; set; }
+    public string Blade { get; set; }
+    public int PoolNum { get; set; }
+    public int EventId { get; set; }
 }
