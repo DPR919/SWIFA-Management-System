@@ -8,6 +8,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using QuestPDF.Infrastructure;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Companion;
+using System.Diagnostics;
 
 namespace SWIFA_Management_System
 {
@@ -33,8 +38,8 @@ namespace SWIFA_Management_System
 
             using (var db = new EventsDatabaseContext())
             {
-                var pools = db.Pools.Where(p=>p.EventId == _eventId && p.Blade == selectedBlade)
-                    .OrderBy(p=>p.PoolNum).ToList();
+                var pools = db.Pools.Where(p => p.EventId == _eventId && p.Blade == selectedBlade)
+                    .OrderBy(p => p.PoolNum).ToList();
 
                 for (int i = 0; i < pools.Count; i++)
                 {
@@ -60,6 +65,20 @@ namespace SWIFA_Management_System
                     poolsLayout.Controls.Add(lb, col, row);
                 }
             }
+        }
+
+        private void exportButton_Click(object sender, EventArgs e)
+        {
+            QuestPDF.Settings.License = LicenseType.Community;
+
+            Document.Create(container =>
+            {
+                container.Page(page =>
+                {
+                    page.Content().Text("Hello World");
+                });
+            }).GeneratePdf("output.pdf");
+            Process.Start(new ProcessStartInfo { FileName = "output.pdf", UseShellExecute = true });
         }
     }
 }

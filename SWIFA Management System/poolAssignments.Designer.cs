@@ -31,6 +31,7 @@
             label1 = new Label();
             bladeSelection = new ComboBox();
             poolsLayout = new TableLayoutPanel();
+            exportButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -68,11 +69,22 @@
             poolsLayout.Size = new Size(776, 382);
             poolsLayout.TabIndex = 2;
             // 
+            // exportButton
+            // 
+            exportButton.Location = new Point(676, 10);
+            exportButton.Name = "exportButton";
+            exportButton.Size = new Size(112, 34);
+            exportButton.TabIndex = 3;
+            exportButton.Text = "Export";
+            exportButton.UseVisualStyleBackColor = true;
+            exportButton.Click += exportButton_Click;
+            // 
             // poolAssignments
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(exportButton);
             Controls.Add(poolsLayout);
             Controls.Add(bladeSelection);
             Controls.Add(label1);
@@ -88,5 +100,6 @@
         private Label label1;
         private ComboBox bladeSelection;
         private TableLayoutPanel poolsLayout;
+        private Button exportButton;
     }
 }

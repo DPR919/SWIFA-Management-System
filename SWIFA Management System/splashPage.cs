@@ -4,8 +4,6 @@ namespace SWIFA_Management_System
 {
     public partial class splashPage : Form
     {
-        private float originalFormWidth;
-        private float originalFormHeight;
         public splashPage()
         {
             InitializeComponent();
@@ -13,8 +11,7 @@ namespace SWIFA_Management_System
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            originalFormWidth = this.Width;
-            originalFormHeight = this.Height;
+
         }
 
         private void label1_Click(object sender, EventArgs e)

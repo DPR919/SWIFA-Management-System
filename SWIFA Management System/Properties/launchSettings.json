@@ -1,0 +1,9 @@
+{
+  "profiles": {
+    "SWIFA_Management_System": {
+      "commandName": "Project",
+      "workingDirectory": "C:\\Users\\dayou\\source\\repos\\SWIFA Management System",
+      "hotReloadEnabled": true
+    }
+  }
+}
