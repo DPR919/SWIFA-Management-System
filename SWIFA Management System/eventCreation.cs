@@ -54,6 +54,13 @@ namespace SWIFA_Management_System
             }
 
             MessageBox.Show("Event created successfully!");
+            clearFields();
+        }
+        private void clearFields()
+        {
+            textBox1.Text = "";
+            dateTimePicker1.Value = DateTime.Now;
+            textBox2.Text = "";
         }
 
         private void label5_Click(object sender, EventArgs e)
@@ -62,6 +69,11 @@ namespace SWIFA_Management_System
         }
 
         private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void eventCreation_Load(object sender, EventArgs e)
         {
 
         }

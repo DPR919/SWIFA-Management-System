@@ -87,9 +87,9 @@
             // 
             // save_button
             // 
-            save_button.Location = new Point(12, 259);
+            save_button.Location = new Point(12, 374);
             save_button.Name = "save_button";
-            save_button.Size = new Size(112, 34);
+            save_button.Size = new Size(180, 64);
             save_button.TabIndex = 5;
             save_button.Text = "Create";
             save_button.UseVisualStyleBackColor = true;
@@ -138,6 +138,7 @@
             Controls.Add(label1);
             Name = "eventCreation";
             Text = "Create an Event";
+            Load += eventCreation_Load;
             ResumeLayout(false);
             PerformLayout();
         }
