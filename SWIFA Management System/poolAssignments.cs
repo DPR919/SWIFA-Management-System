@@ -75,7 +75,7 @@ namespace SWIFA_Management_System
             {
                 container.Page(page =>
                 {
-                    page.Content().Text("Hello World");
+                    page.Content().Text("SWIFA Management System");
                 });
             }).GeneratePdf("output.pdf");
             Process.Start(new ProcessStartInfo { FileName = "output.pdf", UseShellExecute = true });
