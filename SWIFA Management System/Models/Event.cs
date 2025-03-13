@@ -36,7 +36,7 @@ public partial class Team
 
     public int EventId { get; set; }
 
-    public int PoolId { get; set; }
+    public int? PoolId { get; set; }
 
     public override string ToString()
     {
