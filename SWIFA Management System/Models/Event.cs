@@ -38,6 +38,8 @@ public partial class Team
 
     public int? PoolId { get; set; }
 
+    public int? SeedinPool { get; set; }
+
     public override string ToString()
     {
         return School + " " + suffix;

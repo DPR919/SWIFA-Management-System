@@ -140,22 +140,17 @@ namespace SWIFA_Management_System
                     db.Pools.Add(newPool);
                     db.SaveChanges();
 
-                    foreach (var item in lb.Items)
+                    for (int j = 0; j < lb.Items.Count; j++)
                     {
-                        if (item is Team team)
+                        var team = (Team)lb.Items[j];
+                        var dbTeam = db.Teams.Find(team.TeamId);
+                        if (dbTeam != null)
                         {
-                            var dbTeam = db.Teams.Find(team.TeamId);
-                            if (dbTeam != null)
-                            {
-                                dbTeam.PoolId = newPool.PoolId;
-                                db.SaveChanges();
-                            }
-                            else
-                            {
-                                MessageBox.Show("Error: Team not found in database");
-                            }
+                            dbTeam.SeedinPool = j + 1;
+                            dbTeam.PoolId = newPool.PoolId;
                         }
                     }
+                    db.SaveChanges();
                 }
             }
             MessageBox.Show("Pools generated successfully");
