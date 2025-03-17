@@ -32,7 +32,8 @@ namespace SWIFA_Management_System
 
         private void button2_Click(object sender, EventArgs e)
         {
-
+            var form = new inputPoolBouts(EvntId);
+            form.Show();
         }
 
         private void label1_Click(object sender, EventArgs e)
