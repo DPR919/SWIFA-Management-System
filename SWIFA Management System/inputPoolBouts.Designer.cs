@@ -46,12 +46,12 @@
             label8 = new Label();
             teamLeftBox = new ComboBox();
             teamRightBox = new ComboBox();
-            comboBox3 = new ComboBox();
-            comboBox4 = new ComboBox();
-            comboBox5 = new ComboBox();
-            comboBox6 = new ComboBox();
-            comboBox7 = new ComboBox();
-            comboBox8 = new ComboBox();
+            leftC = new ComboBox();
+            leftB = new ComboBox();
+            leftA = new ComboBox();
+            rightC = new ComboBox();
+            rightB = new ComboBox();
+            rightA = new ComboBox();
             SuspendLayout();
             // 
             // label1
@@ -202,6 +202,7 @@
             teamLeftBox.Name = "teamLeftBox";
             teamLeftBox.Size = new Size(142, 33);
             teamLeftBox.TabIndex = 16;
+            teamLeftBox.SelectedIndexChanged += teamLeftBox_SelectedIndexChanged;
             // 
             // teamRightBox
             // 
@@ -210,66 +211,67 @@
             teamRightBox.Name = "teamRightBox";
             teamRightBox.Size = new Size(142, 33);
             teamRightBox.TabIndex = 17;
+            teamRightBox.SelectedIndexChanged += teamRightBox_SelectedIndexChanged;
             // 
-            // comboBox3
+            // leftC
             // 
-            comboBox3.FormattingEnabled = true;
-            comboBox3.Location = new Point(109, 140);
-            comboBox3.Name = "comboBox3";
-            comboBox3.Size = new Size(190, 33);
-            comboBox3.TabIndex = 18;
+            leftC.FormattingEnabled = true;
+            leftC.Location = new Point(109, 140);
+            leftC.Name = "leftC";
+            leftC.Size = new Size(190, 33);
+            leftC.TabIndex = 18;
             // 
-            // comboBox4
+            // leftB
             // 
-            comboBox4.FormattingEnabled = true;
-            comboBox4.Location = new Point(109, 229);
-            comboBox4.Name = "comboBox4";
-            comboBox4.Size = new Size(190, 33);
-            comboBox4.TabIndex = 19;
+            leftB.FormattingEnabled = true;
+            leftB.Location = new Point(109, 229);
+            leftB.Name = "leftB";
+            leftB.Size = new Size(190, 33);
+            leftB.TabIndex = 19;
             // 
-            // comboBox5
+            // leftA
             // 
-            comboBox5.FormattingEnabled = true;
-            comboBox5.Location = new Point(109, 318);
-            comboBox5.Name = "comboBox5";
-            comboBox5.Size = new Size(190, 33);
-            comboBox5.TabIndex = 20;
+            leftA.FormattingEnabled = true;
+            leftA.Location = new Point(109, 318);
+            leftA.Name = "leftA";
+            leftA.Size = new Size(190, 33);
+            leftA.TabIndex = 20;
             // 
-            // comboBox6
+            // rightC
             // 
-            comboBox6.FormattingEnabled = true;
-            comboBox6.Location = new Point(501, 140);
-            comboBox6.Name = "comboBox6";
-            comboBox6.Size = new Size(190, 33);
-            comboBox6.TabIndex = 21;
+            rightC.FormattingEnabled = true;
+            rightC.Location = new Point(501, 140);
+            rightC.Name = "rightC";
+            rightC.Size = new Size(190, 33);
+            rightC.TabIndex = 21;
             // 
-            // comboBox7
+            // rightB
             // 
-            comboBox7.FormattingEnabled = true;
-            comboBox7.Location = new Point(500, 229);
-            comboBox7.Name = "comboBox7";
-            comboBox7.Size = new Size(190, 33);
-            comboBox7.TabIndex = 22;
+            rightB.FormattingEnabled = true;
+            rightB.Location = new Point(500, 229);
+            rightB.Name = "rightB";
+            rightB.Size = new Size(190, 33);
+            rightB.TabIndex = 22;
             // 
-            // comboBox8
+            // rightA
             // 
-            comboBox8.FormattingEnabled = true;
-            comboBox8.Location = new Point(501, 318);
-            comboBox8.Name = "comboBox8";
-            comboBox8.Size = new Size(190, 33);
-            comboBox8.TabIndex = 23;
+            rightA.FormattingEnabled = true;
+            rightA.Location = new Point(501, 318);
+            rightA.Name = "rightA";
+            rightA.Size = new Size(190, 33);
+            rightA.TabIndex = 23;
             // 
             // inputPoolBouts
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
-            Controls.Add(comboBox8);
-            Controls.Add(comboBox7);
-            Controls.Add(comboBox6);
-            Controls.Add(comboBox5);
-            Controls.Add(comboBox4);
-            Controls.Add(comboBox3);
+            Controls.Add(rightA);
+            Controls.Add(rightB);
+            Controls.Add(rightC);
+            Controls.Add(leftA);
+            Controls.Add(leftB);
+            Controls.Add(leftC);
             Controls.Add(teamRightBox);
             Controls.Add(teamLeftBox);
             Controls.Add(label8);
@@ -314,11 +316,11 @@
         private Label label8;
         private ComboBox teamLeftBox;
         private ComboBox teamRightBox;
-        private ComboBox comboBox3;
-        private ComboBox comboBox4;
-        private ComboBox comboBox5;
-        private ComboBox comboBox6;
-        private ComboBox comboBox7;
-        private ComboBox comboBox8;
+        private ComboBox leftC;
+        private ComboBox leftB;
+        private ComboBox leftA;
+        private ComboBox rightC;
+        private ComboBox rightB;
+        private ComboBox rightA;
     }
 }

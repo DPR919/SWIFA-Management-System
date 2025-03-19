@@ -32,7 +32,7 @@ public partial class Team
 
     public string CFencer { get; set; }
 
-    public string AltFencer { get; set; }
+    public string? AltFencer { get; set; }
 
     public int EventId { get; set; }
 
