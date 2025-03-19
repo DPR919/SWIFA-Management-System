@@ -44,8 +44,8 @@
             textBox5 = new TextBox();
             textBox6 = new TextBox();
             label8 = new Label();
-            comboBox1 = new ComboBox();
-            comboBox2 = new ComboBox();
+            teamLeftBox = new ComboBox();
+            teamRightBox = new ComboBox();
             comboBox3 = new ComboBox();
             comboBox4 = new ComboBox();
             comboBox5 = new ComboBox();
@@ -91,6 +91,7 @@
             poolSelection.Name = "poolSelection";
             poolSelection.Size = new Size(86, 33);
             poolSelection.TabIndex = 3;
+            poolSelection.SelectedIndexChanged += poolSelection_SelectedIndexChanged;
             // 
             // label3
             // 
@@ -194,21 +195,21 @@
             label8.TabIndex = 15;
             label8.Text = "Scores";
             // 
-            // comboBox1
+            // teamLeftBox
             // 
-            comboBox1.FormattingEnabled = true;
-            comboBox1.Location = new Point(136, 94);
-            comboBox1.Name = "comboBox1";
-            comboBox1.Size = new Size(142, 33);
-            comboBox1.TabIndex = 16;
+            teamLeftBox.FormattingEnabled = true;
+            teamLeftBox.Location = new Point(136, 94);
+            teamLeftBox.Name = "teamLeftBox";
+            teamLeftBox.Size = new Size(142, 33);
+            teamLeftBox.TabIndex = 16;
             // 
-            // comboBox2
+            // teamRightBox
             // 
-            comboBox2.FormattingEnabled = true;
-            comboBox2.Location = new Point(506, 94);
-            comboBox2.Name = "comboBox2";
-            comboBox2.Size = new Size(142, 33);
-            comboBox2.TabIndex = 17;
+            teamRightBox.FormattingEnabled = true;
+            teamRightBox.Location = new Point(506, 94);
+            teamRightBox.Name = "teamRightBox";
+            teamRightBox.Size = new Size(142, 33);
+            teamRightBox.TabIndex = 17;
             // 
             // comboBox3
             // 
@@ -269,8 +270,8 @@
             Controls.Add(comboBox5);
             Controls.Add(comboBox4);
             Controls.Add(comboBox3);
-            Controls.Add(comboBox2);
-            Controls.Add(comboBox1);
+            Controls.Add(teamRightBox);
+            Controls.Add(teamLeftBox);
             Controls.Add(label8);
             Controls.Add(textBox6);
             Controls.Add(textBox5);
@@ -311,8 +312,8 @@
         private TextBox textBox5;
         private TextBox textBox6;
         private Label label8;
-        private ComboBox comboBox1;
-        private ComboBox comboBox2;
+        private ComboBox teamLeftBox;
+        private ComboBox teamRightBox;
         private ComboBox comboBox3;
         private ComboBox comboBox4;
         private ComboBox comboBox5;
