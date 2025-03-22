@@ -75,35 +75,41 @@ namespace SWIFA_Management_System
                 return;
             }
 
-            var selectedBlade = bladeSelection.SelectedItem.ToString();
-
-            using (var db = new EventsDatabaseContext())
+            // Prompt the user for the output folder first
+            using (var fbd = new FolderBrowserDialog())
             {
-                var pools = db.Pools.Where(p => p.EventId == _eventId && p.Blade == selectedBlade)
-                    .OrderBy(p => p.PoolNum).ToList();
-                int numPools = pools.Count;
+                fbd.Description = "Select a folder to store the output files";
+                if (fbd.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    return; // User cancelled or did not select a valid folder
+                }
+                string outputFolder = fbd.SelectedPath;
 
-                for (int i = 1; i <= numPools; i++)
-                { 
-                    Pool currPool = pools[i - 1];
-                    var squadsInPool = db.Teams
-                        .Where(t=>t.PoolId == currPool.PoolId&&t.Blade==selectedBlade)
-                        .OrderBy(t=>t.SeedinPool)
-                        .ToList();
+                // Now query the database and generate the files using the selected folder
+                var selectedBlade = bladeSelection.SelectedItem.ToString();
 
+                using (var db = new EventsDatabaseContext())
+                {
+                    var pools = db.Pools
+                                  .Where(p => p.EventId == _eventId && p.Blade == selectedBlade)
+                                  .OrderBy(p => p.PoolNum)
+                                  .ToList();
 
-                    using (var fbd = new FolderBrowserDialog())
+                    int numPools = pools.Count;
+
+                    for (int i = 1; i <= numPools; i++)
                     {
-                        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
-                        {
-                            string outputFolder = fbd.SelectedPath;
-                            generatePoolSummary(selectedBlade, i, squadsInPool, outputFolder);
-                        }
-                    }
+                        Pool currPool = pools[i - 1];
+                        var squadsInPool = db.Teams
+                            .Where(t => t.PoolId == currPool.PoolId && t.Blade == selectedBlade)
+                            .OrderBy(t => t.SeedinPool)
+                            .ToList();
 
+                        // Generate the pool summary PDF using the provided output folder
+                        generatePoolSummary(selectedBlade, i, squadsInPool, outputFolder);
+                    }
                 }
             }
-
         }
 
         private void generatePoolSummary(string blade, int poolNum, List<Team> teams, string outputFolder)
