@@ -13,6 +13,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="poolBoutSequence.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="poolBoutSequence.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="SWIFA Color_Export Small.ico" />
   </ItemGroup>
 
@@ -60,7 +67,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Outputs\" />
+    <Folder Include="Output\" />
   </ItemGroup>
 
 </Project>

@@ -69,16 +69,112 @@ namespace SWIFA_Management_System
 
         private void exportButton_Click(object sender, EventArgs e)
         {
+            if (bladeSelection.SelectedItem == null)
+            {
+                MessageBox.Show("Please select a blade to export", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            var selectedBlade = bladeSelection.SelectedItem.ToString();
+
+            using (var db = new EventsDatabaseContext())
+            {
+                var pools = db.Pools.Where(p => p.EventId == _eventId && p.Blade == selectedBlade)
+                    .OrderBy(p => p.PoolNum).ToList();
+                int numPools = pools.Count;
+
+                for (int i = 1; i <= numPools; i++)
+                { 
+                    Pool currPool = pools[i - 1];
+                    var squadsInPool = db.Teams
+                        .Where(t=>t.PoolId == currPool.PoolId&&t.Blade==selectedBlade)
+                        .OrderBy(t=>t.SeedinPool)
+                        .ToList();
+
+
+                    using (var fbd = new FolderBrowserDialog())
+                    {
+                        if (fbd.ShowDialog() == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                        {
+                            string outputFolder = fbd.SelectedPath;
+                            generatePoolSummary(selectedBlade, i, squadsInPool, outputFolder);
+                        }
+                    }
+
+                }
+            }
+
+        }
+
+        private void generatePoolSummary(string blade, int poolNum, List<Team> teams, string outputFolder)
+        {
             QuestPDF.Settings.License = LicenseType.Community;
 
-            Document.Create(container =>
-            {
-                container.Page(page =>
+            List<string> teamNames = teams.Select(t=>t.ToString()).ToList();
+            int numSquads = teams.Count;
+
+
+            QuestPDF.Fluent.Document
+                .Create(container =>
                 {
-                    page.Content().Text("SWIFA Management System");
-                });
-            }).GeneratePdf("output.pdf");
-            Process.Start(new ProcessStartInfo { FileName = "output.pdf", UseShellExecute = true });
+                    container.Page(page =>
+                    {
+                        page.Size(PageSizes.Letter);
+                        page.Margin(0.5f, Unit.Inch);
+
+                        page.Header()
+                            .Text($"{bladeSelection} Pool #{poolNum} Summary")
+                            .FontSize(28)
+                            .Bold();
+
+                        page.Content().Column(column =>
+                        {
+                            column.Item().Height(20);
+                            column.Item().Table(table =>
+                            {
+                                table.ColumnsDefinition(columns =>
+                                {
+                                    columns.ConstantColumn(20);
+                                    columns.ConstantColumn(120);
+                                    for (int i = 0; i < numSquads; i++)
+                                    {
+                                        columns.RelativeColumn(1);
+                                    }
+                                });
+
+                                table.Cell().Element(CellStyle).Text("#").Bold().AlignCenter();
+                                table.Cell().Element(CellStyle).Text("Squad").Bold().AlignCenter();
+
+                                for (int i = 0; i < numSquads; i++)
+                                    table.Cell().Element(CellStyle).Text($"{i + 1}").Bold().AlignCenter();
+
+                                for (int i = 0; i < numSquads; i++)
+                                {
+                                    table.Cell().Element(CellStyle).Text($"{i + 1}").Bold().AlignCenter();
+                                    table.Cell().Element(CellStyle).Text(teamNames[i]).AlignCenter();
+
+                                    for (int j = 0; j < numSquads; j++)
+                                    {
+                                        if (i == j)
+                                            table.Cell().Border(1).Background(Colors.Grey.Darken1).AlignCenter();
+                                        else
+                                            table.Cell().Element(CellStyle).Text(" ").AlignCenter();
+                                    }
+                                }
+
+                                static QuestPDF.Infrastructure.IContainer CellStyle(QuestPDF.Infrastructure.IContainer container)
+                                    => container.Border(1).Padding(8);
+                            });
+                            column.Item().Height(20);
+                            column.Item().Row(row =>
+                            {
+                                row.RelativeItem();
+                                row.ConstantItem(522).Image("./poolBoutSequence.png");
+                                row.RelativeItem();
+                            });
+                        });
+                    });
+                }).GeneratePdf(Path.Combine(outputFolder, $"poolSummary-{poolNum}.pdf"));
         }
     }
 }
