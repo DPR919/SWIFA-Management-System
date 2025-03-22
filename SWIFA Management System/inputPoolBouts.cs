@@ -104,6 +104,7 @@ namespace SWIFA_Management_System
             }
             else
             {
+                // probably will never reach this part
                 rightA.DataSource = null;
                 rightB.DataSource = null;
                 rightC.DataSource = null;
