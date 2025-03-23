@@ -14,10 +14,14 @@
 
   <ItemGroup>
     <None Remove="poolBoutSequence.png" />
+    <None Remove="signatureFields.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Content Include="poolBoutSequence.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="signatureFields.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="SWIFA Color_Export Small.ico" />
