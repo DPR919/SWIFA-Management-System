@@ -129,7 +129,7 @@ namespace SWIFA_Management_System
                         page.Margin(0.5f, Unit.Inch);
 
                         page.Header()
-                            .Text($"{bladeSelection} Pool #{poolNum} Summary")
+                            .Text($"{blade} Pool #{poolNum} Summary")
                             .FontSize(28)
                             .Bold();
 
