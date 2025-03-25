@@ -1,18 +1,12 @@
 ﻿using SWIFA_Management_System.Models;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 using QuestPDF.Infrastructure;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
-using QuestPDF.Companion;
-using System.Diagnostics;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Windows.Forms.VisualStyles;
 
 namespace SWIFA_Management_System
 {
@@ -146,6 +140,8 @@ namespace SWIFA_Management_System
 
                     for (int i = 1; i <= numPools; i++)
                     {
+                        string tempFolder = Path.Combine(outputFolder, Guid.NewGuid().ToString());
+                        Directory.CreateDirectory(tempFolder);
                         Pool currPool = pools[i - 1];
                         var squadsInPool = db.Teams
                             .Where(t => t.PoolId == currPool.PoolId && t.Blade == selectedBlade)
@@ -154,7 +150,7 @@ namespace SWIFA_Management_System
                         int numSquads = squadsInPool.Count;
 
                         // Generate the pool summary PDF using the provided output folder
-                        generatePoolSummary(selectedBlade, i, squadsInPool, outputFolder, numSquads);
+                        generatePoolSummary(selectedBlade, i, squadsInPool, tempFolder, numSquads);
 
                         // Generate the bout sheets for each squad in the pool
                         if (poolBoutSequences.TryGetValue(numSquads, out var matchList))
@@ -165,25 +161,52 @@ namespace SWIFA_Management_System
                                 {
                                     var (leftSeed1, rightSeed1) = matchList[k];
                                     var (leftSeed2, rightSeed2) = matchList[k + 1];
-
                                     Team team1 = squadsInPool[leftSeed1 - 1];
                                     Team team2 = squadsInPool[rightSeed1 - 1];
                                     Team team3 = squadsInPool[leftSeed2 - 1];
                                     Team team4 = squadsInPool[rightSeed2 - 1];
 
-                                    generateBoutSheetForFour(selectedBlade, i, team1, team2, team3, team4, outputFolder, k / 2);
+                                    generateBoutSheetForFour(selectedBlade, i, team1, team2, team3, team4, tempFolder, k / 2);
                                 } else
                                 {
                                     var (leftSeed, rightSeed) = matchList[k];
                                     Team team1 = squadsInPool[leftSeed - 1];
                                     Team team2 = squadsInPool[rightSeed - 1];
-                                    generateBoutSheetForTwo(selectedBlade, i, team1, team2, outputFolder);
+
+                                    generateBoutSheetForTwo(selectedBlade, i, team1, team2, tempFolder);
                                 }
                             }
                         }
-
+                        // write to original output folder
+                        mergeAllPdfs(tempFolder, outputFolder, selectedBlade, i);
+                        Directory.Delete(tempFolder, true);
                     }
 
+                }
+            }
+        }
+
+        private void mergeAllPdfs(string tempFolder, string outputFolder, string blade, int poolNum)
+        {
+            // Get all PDF files in the temporary folder
+            string[] pdfFiles = Directory.GetFiles(tempFolder, "*.pdf");
+            // Define the merged file's output path
+            string mergedFilePath = Path.Combine(outputFolder, $"{blade}-Pool{poolNum}.pdf");
+
+            using (FileStream stream = new FileStream(mergedFilePath, FileMode.Create))
+            using (iTextSharp.text.Document document = new iTextSharp.text.Document())
+            using (PdfCopy pdfCopy = new PdfCopy(document, stream))
+            {
+                document.Open();
+                foreach (string file in pdfFiles)
+                {
+                    using (PdfReader reader = new PdfReader(file))
+                    {
+                        for (int i = 1; i <= reader.NumberOfPages; i++)
+                        {
+                            pdfCopy.AddPage(pdfCopy.GetImportedPage(reader, i));
+                        }
+                    }
                 }
             }
         }
@@ -449,7 +472,7 @@ namespace SWIFA_Management_System
                                     .AlignLeft();
 
                                 row.RelativeItem()
-                                    .Text("[blade] Pool #[poolNum]")
+                                    .Text($"{blade} Pool #{poolNum}")
                                     .FontSize(15)
                                     .Bold()
                                     .AlignRight();
@@ -458,12 +481,12 @@ namespace SWIFA_Management_System
                             column.Item().Row(row =>
                             {
                                 row.RelativeItem()
-                                    .Text("Squad3 vs. Squad4")
+                                    .Text($"{team3.ToString()} vs. {team4.ToString()}")
                                     .FontSize(15)
                                     .AlignLeft();
 
                                 row.RelativeItem()
-                                    .Text("Seed3 vs. Seed4")
+                                    .Text($"{team3.SeedinPool} vs. {team4.SeedinPool}")
                                     .FontSize(15)
                                     .AlignRight();
                             });
@@ -789,7 +812,7 @@ namespace SWIFA_Management_System
                             column.Item().Height(30);
                         });
                     });
-                }).GeneratePdf(Path.Combine(outputFolder, $"encounterSummary2Teams-{poolNum}.pdf"));
+                }).GeneratePdf(Path.Combine(outputFolder, $"encounterSummary5Teams-{poolNum}.pdf"));
         }
     }
 }
