@@ -16,6 +16,7 @@ namespace SWIFA_Management_System
     {
         private int _eventId;
         private string _selectedBlade;
+        private int _selectedPoolId;
         public inputPoolBouts(int eventId)
         {
             InitializeComponent();
@@ -40,12 +41,12 @@ namespace SWIFA_Management_System
 
         private void poolSelection_SelectedIndexChanged(object sender, EventArgs e)
         {
-            int selectedPoolId = ((Pool)poolSelection.SelectedItem).PoolId;
+            _selectedPoolId = ((Pool)poolSelection.SelectedItem).PoolId;
 
             using (var db = new EventsDatabaseContext())
             {
                 var teamsInPools = db.Teams
-                    .Where(t => t.PoolId == selectedPoolId)
+                    .Where(t => t.PoolId == _selectedPoolId)
                     .OrderBy(t => t.TeamId)
                     .ToList();
                 teamLeftBox.DataSource = teamsInPools;
@@ -109,6 +110,94 @@ namespace SWIFA_Management_System
                 rightB.DataSource = null;
                 rightC.DataSource = null;
             }
+        }
+
+        private void submitButton_Click(object sender, EventArgs e)
+        {
+            int leftTeamId = ((Team)teamLeftBox.SelectedValue).TeamId;
+            int rightTeamId = ((Team)teamRightBox.SelectedValue).TeamId;
+
+            // C strip
+            string cLeftFencer = leftC.SelectedItem?.ToString() ?? "";
+            string cRightFencer = rightC.SelectedItem?.ToString() ?? "";
+            int cLeftScore = int.Parse(leftCScore.Text);
+            int cRightScore = int.Parse(rightCScore.Text);
+
+            // B strip
+            string bLeftFencer = leftB.SelectedItem?.ToString() ?? "";
+            string bRightFencer = rightB.SelectedItem?.ToString() ?? "";
+            int bLeftScore = int.Parse(leftBScore.Text);
+            int bRightScore = int.Parse(rightBScore.Text);
+
+            // A strip
+            string aLeftFencer = leftA.SelectedItem?.ToString() ?? "";
+            string aRightFencer = rightA.SelectedItem?.ToString() ?? "";
+            int aLeftScore = int.Parse(leftAScore.Text);
+            int aRightScore = int.Parse(rightAScore.Text);
+
+            using (var db = new EventsDatabaseContext())
+            {
+                var matchC = new Match
+                {
+                    TeamLeftId = leftTeamId,
+                    TeamRightId = rightTeamId,
+                    FencerLeft = cLeftFencer,
+                    FencerLeftStrip = "C",
+                    FencerRight = cRightFencer,
+                    FencerRightStrip = "C",
+                    ScoreLeft = cLeftScore,
+                    ScoreRight = cRightScore,
+                    PoolMatch = true,
+                    DEMatch = false,
+                    PoolId = _selectedPoolId
+                };
+                db.Matches.Add(matchC);
+
+                var matchB = new Match
+                {
+                    TeamLeftId = leftTeamId,
+                    TeamRightId = rightTeamId,
+                    FencerLeft = bLeftFencer,
+                    FencerLeftStrip = "B",
+                    FencerRight = bRightFencer,
+                    FencerRightStrip = "B",
+                    ScoreLeft = bLeftScore,
+                    ScoreRight = bRightScore,
+                    PoolMatch = true,
+                    DEMatch = false,
+                    PoolId = _selectedPoolId
+                };
+                db.Matches.Add(matchB);
+
+                var matchA = new Match
+                {
+                    TeamLeftId = leftTeamId,
+                    TeamRightId = rightTeamId,
+                    FencerLeft = aLeftFencer,
+                    FencerLeftStrip = "A",
+                    FencerRight = aRightFencer,
+                    FencerRightStrip = "A",
+                    ScoreLeft = aLeftScore,
+                    ScoreRight = aRightScore,
+                    PoolMatch = true,
+                    DEMatch = false,
+                    PoolId = _selectedPoolId
+                };
+                db.Matches.Add(matchA);
+
+                db.SaveChanges();
+            }
+            // clear fields
+        }
+
+        private void clearFields()
+        {
+            leftCScore.Clear();
+            rightCScore.Clear();
+            leftBScore.Clear();
+            rightBScore.Clear();
+            leftAScore.Clear();
+            rightAScore.Clear();
         }
     }
 }

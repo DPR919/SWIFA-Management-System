@@ -20,6 +20,7 @@ public partial class EventsDatabaseContext : DbContext
     public virtual DbSet<Team> Teams { get; set; }
     public virtual DbSet<School> Schools { get; set; }
     public virtual DbSet<Pool> Pools { get; set; }
+    public virtual DbSet<Match> Matches { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

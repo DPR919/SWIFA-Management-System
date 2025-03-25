@@ -37,12 +37,12 @@
             label5 = new Label();
             label6 = new Label();
             label7 = new Label();
-            textBox1 = new TextBox();
-            textBox2 = new TextBox();
-            textBox3 = new TextBox();
-            textBox4 = new TextBox();
-            textBox5 = new TextBox();
-            textBox6 = new TextBox();
+            rightCScore = new TextBox();
+            leftCScore = new TextBox();
+            leftBScore = new TextBox();
+            rightBScore = new TextBox();
+            rightAScore = new TextBox();
+            leftAScore = new TextBox();
             label8 = new Label();
             teamLeftBox = new ComboBox();
             teamRightBox = new ComboBox();
@@ -52,6 +52,7 @@
             rightC = new ComboBox();
             rightB = new ComboBox();
             rightA = new ComboBox();
+            submitButton = new Button();
             SuspendLayout();
             // 
             // label1
@@ -143,47 +144,47 @@
             label7.TabIndex = 8;
             label7.Text = "Team Right";
             // 
-            // textBox1
+            // rightCScore
             // 
-            textBox1.Location = new Point(448, 140);
-            textBox1.Name = "textBox1";
-            textBox1.Size = new Size(47, 31);
-            textBox1.TabIndex = 9;
+            rightCScore.Location = new Point(448, 140);
+            rightCScore.Name = "rightCScore";
+            rightCScore.Size = new Size(47, 31);
+            rightCScore.TabIndex = 9;
             // 
-            // textBox2
+            // leftCScore
             // 
-            textBox2.Location = new Point(305, 140);
-            textBox2.Name = "textBox2";
-            textBox2.Size = new Size(47, 31);
-            textBox2.TabIndex = 10;
+            leftCScore.Location = new Point(305, 140);
+            leftCScore.Name = "leftCScore";
+            leftCScore.Size = new Size(47, 31);
+            leftCScore.TabIndex = 10;
             // 
-            // textBox3
+            // leftBScore
             // 
-            textBox3.Location = new Point(305, 229);
-            textBox3.Name = "textBox3";
-            textBox3.Size = new Size(47, 31);
-            textBox3.TabIndex = 11;
+            leftBScore.Location = new Point(305, 229);
+            leftBScore.Name = "leftBScore";
+            leftBScore.Size = new Size(47, 31);
+            leftBScore.TabIndex = 11;
             // 
-            // textBox4
+            // rightBScore
             // 
-            textBox4.Location = new Point(447, 229);
-            textBox4.Name = "textBox4";
-            textBox4.Size = new Size(47, 31);
-            textBox4.TabIndex = 12;
+            rightBScore.Location = new Point(447, 229);
+            rightBScore.Name = "rightBScore";
+            rightBScore.Size = new Size(47, 31);
+            rightBScore.TabIndex = 12;
             // 
-            // textBox5
+            // rightAScore
             // 
-            textBox5.Location = new Point(448, 318);
-            textBox5.Name = "textBox5";
-            textBox5.Size = new Size(47, 31);
-            textBox5.TabIndex = 13;
+            rightAScore.Location = new Point(448, 318);
+            rightAScore.Name = "rightAScore";
+            rightAScore.Size = new Size(47, 31);
+            rightAScore.TabIndex = 13;
             // 
-            // textBox6
+            // leftAScore
             // 
-            textBox6.Location = new Point(305, 318);
-            textBox6.Name = "textBox6";
-            textBox6.Size = new Size(47, 31);
-            textBox6.TabIndex = 14;
+            leftAScore.Location = new Point(305, 318);
+            leftAScore.Name = "leftAScore";
+            leftAScore.Size = new Size(47, 31);
+            leftAScore.TabIndex = 14;
             // 
             // label8
             // 
@@ -261,11 +262,22 @@
             rightA.Size = new Size(190, 33);
             rightA.TabIndex = 23;
             // 
+            // submitButton
+            // 
+            submitButton.Location = new Point(331, 380);
+            submitButton.Name = "submitButton";
+            submitButton.Size = new Size(138, 58);
+            submitButton.TabIndex = 24;
+            submitButton.Text = "Submit";
+            submitButton.UseVisualStyleBackColor = true;
+            submitButton.Click += submitButton_Click;
+            // 
             // inputPoolBouts
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(submitButton);
             Controls.Add(rightA);
             Controls.Add(rightB);
             Controls.Add(rightC);
@@ -275,12 +287,12 @@
             Controls.Add(teamRightBox);
             Controls.Add(teamLeftBox);
             Controls.Add(label8);
-            Controls.Add(textBox6);
-            Controls.Add(textBox5);
-            Controls.Add(textBox4);
-            Controls.Add(textBox3);
-            Controls.Add(textBox2);
-            Controls.Add(textBox1);
+            Controls.Add(leftAScore);
+            Controls.Add(rightAScore);
+            Controls.Add(rightBScore);
+            Controls.Add(leftBScore);
+            Controls.Add(leftCScore);
+            Controls.Add(rightCScore);
             Controls.Add(label7);
             Controls.Add(label6);
             Controls.Add(label5);
@@ -307,12 +319,12 @@
         private Label label5;
         private Label label6;
         private Label label7;
-        private TextBox textBox1;
-        private TextBox textBox2;
-        private TextBox textBox3;
-        private TextBox textBox4;
-        private TextBox textBox5;
-        private TextBox textBox6;
+        private TextBox rightCScore;
+        private TextBox leftCScore;
+        private TextBox leftBScore;
+        private TextBox rightBScore;
+        private TextBox rightAScore;
+        private TextBox leftAScore;
         private Label label8;
         private ComboBox teamLeftBox;
         private ComboBox teamRightBox;
@@ -322,5 +334,6 @@
         private ComboBox rightC;
         private ComboBox rightB;
         private ComboBox rightA;
+        private Button submitButton;
     }
 }

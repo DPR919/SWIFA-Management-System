@@ -66,10 +66,12 @@ public partial class Match
     public int TeamLeftId { get; set; }
     public int TeamRightId { get; set; }
     public string FencerLeft { get; set; }
+
+    public string FencerLeftStrip { get; set; }
     public string FencerRight { get; set; }
+    public string FencerRightStrip { get; set; }
     public int ScoreLeft { get; set; }
     public int ScoreRight { get; set; }
-    public int EventId { get; set; }
     public bool PoolMatch { get; set; }
     public bool DEMatch { get; set; }
     public int? PoolId { get; set; }
