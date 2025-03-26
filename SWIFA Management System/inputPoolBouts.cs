@@ -118,7 +118,7 @@ namespace SWIFA_Management_System
             var rightTeam = (Team)teamRightBox.SelectedValue;
             if (leftTeam == null || rightTeam == null)
             {
-                MessageBox.Show("Please select both teams before submitting.")
+                MessageBox.Show("Please select both teams before submitting.");
                 return;
             }
 
@@ -212,7 +212,9 @@ namespace SWIFA_Management_System
 
                 db.SaveChanges();
             }
+            MessageBox.Show("Encounter recorded successfully!");
             // clear fields
+            clearFields();
         }
 
         private void clearFields()
@@ -223,6 +225,9 @@ namespace SWIFA_Management_System
             rightBScore.Clear();
             leftAScore.Clear();
             rightAScore.Clear();
+
+            teamLeftBox.SelectedIndex = -1;
+            teamRightBox.SelectedIndex = -1;
         }
     }
 }
