@@ -114,8 +114,23 @@ namespace SWIFA_Management_System
 
         private void submitButton_Click(object sender, EventArgs e)
         {
-            int leftTeamId = ((Team)teamLeftBox.SelectedValue).TeamId;
-            int rightTeamId = ((Team)teamRightBox.SelectedValue).TeamId;
+            var leftTeam = (Team)teamLeftBox.SelectedValue;
+            var rightTeam = (Team)teamRightBox.SelectedValue;
+            if (leftTeam == null || rightTeam == null)
+            {
+                MessageBox.Show("Please select both teams before submitting.")
+                return;
+            }
+
+            int leftTeamId = leftTeam.TeamId;
+            int rightTeamId = rightTeam.TeamId;
+            if (leftTeamId == rightTeamId)
+            {
+                MessageBox.Show("A team should not fence itself.");
+                return;
+            }
+
+
 
             // C strip
             string cLeftFencer = leftC.SelectedItem?.ToString() ?? "";
@@ -137,6 +152,16 @@ namespace SWIFA_Management_System
 
             using (var db = new EventsDatabaseContext())
             {
+                var existingMatch = db.Matches
+                    .FirstOrDefault(m => m.PoolId == _selectedPoolId && ((m.TeamLeftId == leftTeamId && m.TeamRightId == rightTeamId)
+                 || (m.TeamLeftId == rightTeamId && m.TeamRightId == leftTeamId)));
+
+                if (existingMatch != null)
+                {
+                    MessageBox.Show("This matchup is already recorded.");
+                    return;
+                }
+
                 var matchC = new Match
                 {
                     TeamLeftId = leftTeamId,
