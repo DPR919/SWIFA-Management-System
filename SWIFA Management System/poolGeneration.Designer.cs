@@ -113,6 +113,7 @@
             poolsLayout.RowStyles.Add(new RowStyle(SizeType.Percent, 33.3333321F));
             poolsLayout.Size = new Size(590, 372);
             poolsLayout.TabIndex = 6;
+            poolsLayout.Paint += poolsLayout_Paint;
             // 
             // confirmButton
             // 

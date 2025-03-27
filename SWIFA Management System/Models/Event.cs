@@ -70,8 +70,8 @@ public partial class Match
     public string FencerLeftStrip { get; set; }
     public string FencerRight { get; set; }
     public string FencerRightStrip { get; set; }
-    public int ScoreLeft { get; set; }
-    public int ScoreRight { get; set; }
+    public string ScoreLeft { get; set; }
+    public string ScoreRight { get; set; }
     public bool PoolMatch { get; set; }
     public bool DEMatch { get; set; }
     public int? PoolId { get; set; }

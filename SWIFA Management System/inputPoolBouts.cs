@@ -135,20 +135,20 @@ namespace SWIFA_Management_System
             // C strip
             string cLeftFencer = leftC.SelectedItem?.ToString() ?? "";
             string cRightFencer = rightC.SelectedItem?.ToString() ?? "";
-            int cLeftScore = int.Parse(leftCScore.Text);
-            int cRightScore = int.Parse(rightCScore.Text);
+            string cLeftScore = leftCScore.Text;
+            string cRightScore = rightCScore.Text;
 
             // B strip
             string bLeftFencer = leftB.SelectedItem?.ToString() ?? "";
             string bRightFencer = rightB.SelectedItem?.ToString() ?? "";
-            int bLeftScore = int.Parse(leftBScore.Text);
-            int bRightScore = int.Parse(rightBScore.Text);
+            string bLeftScore = leftBScore.Text;
+            string bRightScore = rightBScore.Text;
 
             // A strip
             string aLeftFencer = leftA.SelectedItem?.ToString() ?? "";
             string aRightFencer = rightA.SelectedItem?.ToString() ?? "";
-            int aLeftScore = int.Parse(leftAScore.Text);
-            int aRightScore = int.Parse(rightAScore.Text);
+            string aLeftScore = leftAScore.Text;
+            string aRightScore = rightAScore.Text;
 
             using (var db = new EventsDatabaseContext())
             {

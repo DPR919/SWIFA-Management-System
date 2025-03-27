@@ -16,6 +16,7 @@ namespace SWIFA_Management_System
         private int _eventId;
         private List<ListBox> poolListBoxes = new List<ListBox>();
         private ListBox currentDragSource;
+        private int _dragIndex = -1;
         public poolGeneration(int eventId)
         {
             InitializeComponent();
@@ -67,12 +68,25 @@ namespace SWIFA_Management_System
                 lb.DragEnter += poolListBox_DragEnter;
                 lb.DragDrop += poolListBox_DragDrop;
                 lb.MouseDown += poolListBox_MouseDown;
+                lb.DragOver += poolListBox_DragOver;
 
                 int row = i / 3;
                 int col = i % 3;
 
                 poolsLayout.Controls.Add(lb, col, row);
                 poolListBoxes.Add(lb);
+            }
+        }
+
+        private void poolListBox_DragOver(object sender, DragEventArgs e)
+        {
+            if (e.Data.GetDataPresent(typeof(Team)))
+            {
+                e.Effect = DragDropEffects.Move;
+            }
+            else
+            {
+                e.Effect = DragDropEffects.None;
             }
         }
 
@@ -99,13 +113,38 @@ namespace SWIFA_Management_System
         private void poolListBox_DragDrop(object sender, DragEventArgs e)
         {
             var targetListBox = (ListBox)sender;
-
             var draggedItem = e.Data.GetData(typeof(Team)) as Team;
+            if (draggedItem == null) return;
 
-            if (draggedItem != null)
+            // If user dropped in the same list, reorder instead of cross-list move
+            if (currentDragSource == targetListBox)
             {
+                // If _dragIndex is invalid, do nothing
+                if (_dragIndex < 0) return;
+
+                // Convert mouse coords to list coords to find the drop index
+                Point dropPoint = targetListBox.PointToClient(new Point(e.X, e.Y));
+                int dropIndex = targetListBox.IndexFromPoint(dropPoint);
+                if (dropIndex < 0)
+                    dropIndex = targetListBox.Items.Count - 1;
+
+                // Remove the item from the old location
+                targetListBox.Items.RemoveAt(_dragIndex);
+
+                // If removing an item from above shifts indices, adjust if needed
+                if (dropIndex > targetListBox.Items.Count)
+                    dropIndex = targetListBox.Items.Count;
+
+                // Insert the item at the new index
+                targetListBox.Items.Insert(dropIndex, draggedItem);
+            }
+            else
+            {
+                // Different list => cross-list move
                 targetListBox.Items.Add(draggedItem);
 
+                // If you're removing from 'selectedBladeList' or a pool box
+                // handle that as you currently do
                 selectedBladeList.Items.Remove(draggedItem);
 
                 if (currentDragSource != null && currentDragSource != targetListBox)
@@ -113,11 +152,20 @@ namespace SWIFA_Management_System
                     currentDragSource.Items.Remove(draggedItem);
                 }
             }
+
+            // Reset _dragIndex after finishing
+            _dragIndex = -1;
         }
 
         private void poolListBox_MouseDown(object sender, MouseEventArgs e)
         {
             currentDragSource = (ListBox)sender;
+
+            _dragIndex = currentDragSource.IndexFromPoint(e.Location);
+            if (_dragIndex < 0)
+            {
+                return;
+            }
             if (currentDragSource.SelectedItem != null)
             {
                 DoDragDrop(currentDragSource.SelectedItem, DragDropEffects.Move);
@@ -157,6 +205,11 @@ namespace SWIFA_Management_System
         }
 
         private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void poolsLayout_Paint(object sender, PaintEventArgs e)
         {
 
         }
