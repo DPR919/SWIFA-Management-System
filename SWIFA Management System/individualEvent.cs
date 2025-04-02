@@ -63,5 +63,11 @@ namespace SWIFA_Management_System
             var viewPools = new poolAssignments(this.EvntId);
             viewPools.Show();
         }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+            var verifyPoolResults = new verifyPoolResults(this.EvntId);
+            verifyPoolResults.Show();
+        }
     }
 }

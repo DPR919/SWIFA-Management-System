@@ -56,6 +56,7 @@ public partial class Pool
 {
     public int PoolId { get; set; }
     public string Blade { get; set; }
+    public int TwoFencerSquadCount { get; set; }
     public int PoolNum { get; set; }
     public int EventId { get; set; }
 }

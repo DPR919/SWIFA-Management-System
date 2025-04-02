@@ -174,6 +174,12 @@ namespace SWIFA_Management_System
 
         private void confirmButton_Click(object sender, EventArgs e)
         {
+            if (selectedBladeList.Items.Count > 0)
+            {
+                MessageBox.Show("Not all teams are assigned.");
+                return;
+            }
+
             using (var db = new EventsDatabaseContext())
             {
                 for (int i = 0; i < poolListBoxes.Count; i++)

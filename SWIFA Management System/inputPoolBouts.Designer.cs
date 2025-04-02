@@ -53,6 +53,7 @@
             rightB = new ComboBox();
             rightA = new ComboBox();
             submitButton = new Button();
+            label9 = new Label();
             SuspendLayout();
             // 
             // label1
@@ -272,11 +273,21 @@
             submitButton.UseVisualStyleBackColor = true;
             submitButton.Click += submitButton_Click;
             // 
+            // label9
+            // 
+            label9.AutoSize = true;
+            label9.Location = new Point(173, 66);
+            label9.Name = "label9";
+            label9.Size = new Size(455, 25);
+            label9.TabIndex = 25;
+            label9.Text = "If there is a squad with 2 fencers, input VF/DF for C strip";
+            // 
             // inputPoolBouts
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(label9);
             Controls.Add(submitButton);
             Controls.Add(rightA);
             Controls.Add(rightB);
@@ -335,5 +346,6 @@
         private ComboBox rightB;
         private ComboBox rightA;
         private Button submitButton;
+        private Label label9;
     }
 }
