@@ -94,10 +94,95 @@ namespace SWIFA_Management_System
             if (sb.Length > 0)
             {
                 MessageBox.Show(sb.ToString(), "Inconsistencies Detected", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            } else
+            }
+            else
             {
                 MessageBox.Show("All integrity checks passed.", "Integrity Check", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void printBoolResult_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private static List<FencerPoolResult> GetFencerResultsForPool(int poolId)
+        {
+            using var db = new EventsDatabaseContext();
+
+            var raw =
+            (
+                from m in db.Matches
+                where m.PoolId == poolId
+                join leftT in db.Teams on m.TeamLeftId equals leftT.TeamId
+                join rightT in db.Teams on m.TeamRightId equals rightT.TeamId
+                select new
+                {
+                    LeftSeed = leftT.SeedinPool,
+                    LeftName = leftT.ToString(),
+                    StripLeft = m.FencerLeftStrip,
+                    FencerLeft = m.FencerLeft,
+                    ScoreLf = m.ScoreLeft,
+                    ScoreRf = m.ScoreRight,
+
+                    RightSeed = rightT.SeedinPool,
+                    RightName = rightT.ToString(),
+                    StripRight = m.FencerRightStrip,
+                    FencerRight = m.FencerRight,
+                    ScoreRl = m.ScoreRight,
+                    ScoreLl = m.ScoreLeft
+
+                }
+            ).ToList();
+
+            var all = raw.Select(r => new
+            {
+                Seed = r.LeftSeed,
+                Squad = r.LeftName,
+                Strip = r.StripLeft,
+                Name = r.FencerLeft,
+                Scored = r.ScoreLf,
+                Received = r.ScoreRf,
+                Won = r.ScoreLf[0] == 'V'
+            })
+            .Concat(raw.Select(r => new
+            {
+                Seed = r.RightSeed,
+                Squad = r.RightName,
+                Strip = r.StripRight,
+                Name = r.FencerRight,
+                Scored = r.ScoreRl,
+                Received = r.ScoreLl,
+                Won = r.ScoreRl[0] == 'V'
+            })).ToList();
+
+            var results = all
+                .GroupBy(x => new {x.Seed, x.Squad, x.Strip, x.Name })
+                .Select(g =>
+                {
+                    var wins = g.Count(x => x.Won);
+                    var bouts = g.Count();
+                    var scored = g.Sum(x => int.Parse(x.Scored.Substring(0, 1)));
+                    var received = g.Sum(x => int.Parse(x.Received.Substring(0, 1)));
+
+                    return new FencerPoolResult
+                    {
+                        SquadSeed = (int)g.Key.Seed,
+                        SquadName = g.Key.Squad,
+                        FencerStrip = g.Key.Strip,
+                        FencerName = g.Key.Name,
+                        Wins = wins,
+                        Losses = bouts - wins,
+                        WinPct = bouts > 0 ? (double)wins / bouts : 0.0,
+                        TouchesScored = scored,
+                        TouchesReceived = received
+                    };
+                })
+                .OrderBy(r => r.SquadSeed)
+                .ThenBy(r => r.FencerStrip)
+                .ToList();
+
+            return results;
         }
     }
 }

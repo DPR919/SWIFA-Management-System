@@ -33,13 +33,14 @@
             label2 = new Label();
             poolSelection = new ComboBox();
             verifyButton = new Button();
+            printBoolResult = new Button();
             SuspendLayout();
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label1.Location = new Point(12, 9);
+            label1.Location = new Point(13, 9);
             label1.Name = "label1";
             label1.Size = new Size(242, 32);
             label1.TabIndex = 1;
@@ -49,9 +50,9 @@
             // 
             bladeSelection.FormattingEnabled = true;
             bladeSelection.Items.AddRange(new object[] { "Foil", "Epee", "Sabre" });
-            bladeSelection.Location = new Point(260, 12);
+            bladeSelection.Location = new Point(286, 12);
             bladeSelection.Name = "bladeSelection";
-            bladeSelection.Size = new Size(86, 33);
+            bladeSelection.Size = new Size(94, 32);
             bladeSelection.TabIndex = 2;
             bladeSelection.SelectedIndexChanged += bladeSelection_SelectedIndexChanged;
             // 
@@ -59,7 +60,7 @@
             // 
             label2.AutoSize = true;
             label2.Font = new Font("Segoe UI", 12F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            label2.Location = new Point(352, 9);
+            label2.Location = new Point(387, 9);
             label2.Name = "label2";
             label2.Size = new Size(81, 32);
             label2.TabIndex = 3;
@@ -68,27 +69,38 @@
             // poolSelection
             // 
             poolSelection.FormattingEnabled = true;
-            poolSelection.Location = new Point(439, 12);
+            poolSelection.Location = new Point(483, 12);
             poolSelection.Name = "poolSelection";
-            poolSelection.Size = new Size(86, 33);
+            poolSelection.Size = new Size(94, 32);
             poolSelection.TabIndex = 4;
             poolSelection.SelectedIndexChanged += poolSelection_SelectedIndexChanged;
             // 
             // verifyButton
             // 
-            verifyButton.Location = new Point(12, 44);
+            verifyButton.Location = new Point(13, 42);
             verifyButton.Name = "verifyButton";
-            verifyButton.Size = new Size(242, 66);
+            verifyButton.Size = new Size(266, 63);
             verifyButton.TabIndex = 5;
             verifyButton.Text = "Verify Pool Results Integrity";
             verifyButton.UseVisualStyleBackColor = true;
             verifyButton.Click += verifyButton_Click;
             // 
+            // printBoolResult
+            // 
+            printBoolResult.Location = new Point(13, 111);
+            printBoolResult.Name = "printBoolResult";
+            printBoolResult.Size = new Size(266, 63);
+            printBoolResult.TabIndex = 6;
+            printBoolResult.Text = "Print Results Summary for Selected Pool";
+            printBoolResult.UseVisualStyleBackColor = true;
+            printBoolResult.Click += printBoolResult_Click;
+            // 
             // verifyPoolResults
             // 
-            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleDimensions = new SizeF(11F, 24F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(880, 432);
+            Controls.Add(printBoolResult);
             Controls.Add(verifyButton);
             Controls.Add(poolSelection);
             Controls.Add(label2);
@@ -107,5 +119,6 @@
         private Label label2;
         private ComboBox poolSelection;
         private Button verifyButton;
+        private Button printBoolResult;
     }
 }
