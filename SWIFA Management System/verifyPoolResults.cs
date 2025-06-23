@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
+using QuestPDF.Fluent;
 using SWIFA_Management_System.Models;
 using System;
 using System.Collections.Generic;
@@ -7,6 +8,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -103,7 +105,93 @@ namespace SWIFA_Management_System
 
         private void printBoolResult_Click(object sender, EventArgs e)
         {
+            if (bladeSelection.SelectedItem == null || poolSelection.SelectedItem == null)
+            {
+                MessageBox.Show("Please select both a blade and a pool before exporting", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
+            using (var fbd = new FolderBrowserDialog())
+            {
+                fbd.Description = "Select a folder to store the output files";
+                if (fbd.ShowDialog() != DialogResult.OK || string.IsNullOrWhiteSpace(fbd.SelectedPath))
+                {
+                    return;
+                }
+                string outputFolder = fbd.SelectedPath;
+
+                int poolId = ((Pool)poolSelection.SelectedItem).PoolId;
+                var results = GetFencerResultsForPool(poolId);
+
+                var blade = bladeSelection.SelectedItem.ToString();
+                var poolNum = ((Pool)poolSelection.SelectedItem).PoolNum;
+                var file = Path.Combine(outputFolder, $"{blade}_Pool{poolNum}_FencerResults.pdf");
+
+                QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+                QuestPDF.Fluent.Document
+                    .Create(doc =>
+                    {
+                        doc.Page(page =>
+                        {
+                            page.Margin(40);
+
+                            page.Header()
+                            .Text($"{blade} - Pool #{poolNum} - Results")
+                            .FontSize(20)
+                            .SemiBold()
+                            .AlignCenter();
+
+                            page.Content()
+                                .Table(table =>
+                                {
+                                    table.ColumnsDefinition(columns =>
+                                    {
+                                        columns.ConstantColumn(10);
+                                        columns.RelativeColumn();
+                                        columns.ConstantColumn(40);
+                                        columns.ConstantColumn(70);
+                                        columns.ConstantColumn(40);           // W
+                                        columns.ConstantColumn(40);           // L
+                                        columns.ConstantColumn(50);           // %
+                                        columns.ConstantColumn(50);           // TS
+                                        columns.ConstantColumn(50);
+                                        columns.ConstantColumn(60);
+                                    });
+
+                                    table.Header(header =>
+                                    {
+                                        header.Cell().Text("#");
+                                        header.Cell().Text("Squad");
+                                        header.Cell().Text("Strip");
+                                        header.Cell().Text("Name");
+                                        header.Cell().Text("W");
+                                        header.Cell().Text("L");
+                                        header.Cell().Text("%");
+                                        header.Cell().Text("TS");
+                                        header.Cell().Text("TR");
+                                        header.Cell().Text("Ind.");
+                                    });
+
+                                    foreach (var r in results)
+                                    {
+                                        table.Cell().Text(r.SquadSeed.ToString());
+                                        table.Cell().Text(r.SquadName);
+                                        table.Cell().Text(r.FencerStrip);
+                                        table.Cell().Text(r.FencerName);
+                                        table.Cell().Text(r.Wins.ToString());
+                                        table.Cell().Text(r.Losses.ToString());
+                                        table.Cell().Text(r.WinPct.ToString("P1"));
+                                        table.Cell().Text(r.TouchesScored.ToString());
+                                        table.Cell().Text(r.TouchesReceived.ToString());
+
+                                        var indicator = r.TouchesScored - r.TouchesReceived;
+                                        table.Cell().Text(indicator.ToString());
+                                    }
+                                });
+                        });
+                    }).GeneratePdf(file);
+                MessageBox.Show($"Pool results PDF written to:\n{file}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
 
         private static List<FencerPoolResult> GetFencerResultsForPool(int poolId)
@@ -162,8 +250,9 @@ namespace SWIFA_Management_System
                 {
                     var wins = g.Count(x => x.Won);
                     var bouts = g.Count();
-                    var scored = g.Sum(x => int.Parse(x.Scored.Substring(0, 1)));
-                    var received = g.Sum(x => int.Parse(x.Received.Substring(0, 1)));
+
+                    var scored = g.Sum(x => int.Parse(x.Scored.Substring(1, 1)));
+                    var received = g.Sum(x => int.Parse(x.Received.Substring(1, 1)));
 
                     return new FencerPoolResult
                     {
