@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
+using QuestPDF.Helpers;
 using SWIFA_Management_System.Models;
 using System;
 using System.Collections.Generic;
@@ -134,6 +135,7 @@ namespace SWIFA_Management_System
                         doc.Page(page =>
                         {
                             page.Margin(40);
+                            page.Size(PageSizes.Letter.Landscape());
 
                             page.Header()
                             .Text($"{blade} - Pool #{poolNum} - Results")
@@ -146,16 +148,16 @@ namespace SWIFA_Management_System
                                 {
                                     table.ColumnsDefinition(columns =>
                                     {
-                                        columns.ConstantColumn(10);
-                                        columns.RelativeColumn();
-                                        columns.ConstantColumn(40);
-                                        columns.ConstantColumn(70);
-                                        columns.ConstantColumn(40);           // W
-                                        columns.ConstantColumn(40);           // L
-                                        columns.ConstantColumn(50);           // %
-                                        columns.ConstantColumn(50);           // TS
-                                        columns.ConstantColumn(50);
-                                        columns.ConstantColumn(60);
+                                        columns.ConstantColumn(30);    // “#”
+                                        columns.ConstantColumn(80);    // “Squad”
+                                        columns.ConstantColumn(25);    // “Strip”
+                                        columns.RelativeColumn(3);     // “Name” (3× a unit of “relative” space)
+                                        columns.ConstantColumn(30);    // “W”
+                                        columns.ConstantColumn(30);    // “L”
+                                        columns.ConstantColumn(50);    // “%”
+                                        columns.ConstantColumn(40);    // “TS”
+                                        columns.ConstantColumn(40);    // “TR”
+                                        columns.ConstantColumn(40);    // “Ind.”
                                     });
 
                                     table.Header(header =>
@@ -174,18 +176,16 @@ namespace SWIFA_Management_System
 
                                     foreach (var r in results)
                                     {
-                                        table.Cell().Text(r.SquadSeed.ToString());
+                                        table.Cell().Text(r.SquadSeed);
                                         table.Cell().Text(r.SquadName);
                                         table.Cell().Text(r.FencerStrip);
                                         table.Cell().Text(r.FencerName);
-                                        table.Cell().Text(r.Wins.ToString());
-                                        table.Cell().Text(r.Losses.ToString());
-                                        table.Cell().Text(r.WinPct.ToString("P1"));
-                                        table.Cell().Text(r.TouchesScored.ToString());
-                                        table.Cell().Text(r.TouchesReceived.ToString());
-
-                                        var indicator = r.TouchesScored - r.TouchesReceived;
-                                        table.Cell().Text(indicator.ToString());
+                                        table.Cell().AlignCenter().Text(r.Wins);
+                                        table.Cell().AlignCenter().Text(r.Losses);
+                                        table.Cell().AlignCenter().Text(r.WinPct.ToString("P1"));
+                                        table.Cell().AlignCenter().Text(r.TouchesScored);
+                                        table.Cell().AlignCenter().Text(r.TouchesReceived);
+                                        table.Cell().AlignCenter().Text((r.TouchesScored - r.TouchesReceived));
                                     }
                                 });
                         });
