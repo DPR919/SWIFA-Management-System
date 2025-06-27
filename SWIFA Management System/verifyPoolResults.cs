@@ -165,72 +165,87 @@ namespace SWIFA_Management_System
                         boutLookup[(rightSeed, m.FencerRightStrip, boutIndex)] = codeR;
                     }
 
-                };
-                
-
-                QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
-                QuestPDF.Fluent.Document
-                    .Create(doc =>
+                    QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+                    QuestPDF.Fluent.Document.Create(container =>
                     {
-                        doc.Page(page =>
+                        container.Page(page =>
                         {
-                            page.Margin(40);
-                            page.Size(PageSizes.Letter.Landscape());
+                            page.Margin(20);
+                            page.Size(PageSizes.Letter.Landscape());     // ← horizontal orientation
+                            page.DefaultTextStyle(x => x.FontSize(9));
 
-                            page.Header()
-                            .Text($"{blade} - Pool #{poolNum} - Results")
-                            .FontSize(20)
-                            .SemiBold()
-                            .AlignCenter();
+                            // title
+                            page.Header().AlignCenter().Text($"{blade} – Pool #{poolNum} – Details")
+                                         .SemiBold().FontSize(16);
 
-                            page.Content()
-                                .Table(table =>
+                            page.Content().Table(tbl =>
+                            {
+                                // ── column definitions ─────────────────────────────────────────
+                                tbl.ColumnsDefinition(cols =>
                                 {
-                                    table.ColumnsDefinition(columns =>
-                                    {
-                                        columns.ConstantColumn(30);    // “#”
-                                        columns.ConstantColumn(80);    // “Squad”
-                                        columns.ConstantColumn(25);    // “Strip”
-                                        columns.RelativeColumn(3);     // “Name” (3× a unit of “relative” space)
-                                        columns.ConstantColumn(30);    // “W”
-                                        columns.ConstantColumn(30);    // “L”
-                                        columns.ConstantColumn(50);    // “%”
-                                        columns.ConstantColumn(40);    // “TS”
-                                        columns.ConstantColumn(40);    // “TR”
-                                        columns.ConstantColumn(40);    // “Ind.”
-                                    });
+                                    cols.ConstantColumn(30);         // "#"
+                                    cols.ConstantColumn(80);         // "Squad"
+                                    cols.ConstantColumn(30);         // "Strip"
+                                    cols.RelativeColumn(3);          // "Name"
+                                                                     // now one ConstantColumn for each bout in order:
+                                    for (int i = 0; i < numBouts; i++)
+                                        cols.ConstantColumn(40);
+                                });
 
-                                    table.Header(header =>
+                                // ── header row ─────────────────────────────────────────────────
+                                tbl.Header(h =>
+                                {
+                                    h.Cell().Text("#");
+                                    h.Cell().Text("Squad");
+                                    h.Cell().Text("S");
+                                    h.Cell().Text("Name");
+                                    for (int i = 0; i < numBouts; i++)
                                     {
-                                        header.Cell().Text("#");
-                                        header.Cell().Text("Squad");
-                                        header.Cell().Text("Strip");
-                                        header.Cell().Text("Name");
-                                        header.Cell().Text("W");
-                                        header.Cell().Text("L");
-                                        header.Cell().Text("%");
-                                        header.Cell().Text("TS");
-                                        header.Cell().Text("TR");
-                                        header.Cell().Text("Ind.");
-                                    });
-
-                                    foreach (var r in results)
-                                    {
-                                        table.Cell().Text(r.SquadSeed);
-                                        table.Cell().Text(r.SquadName);
-                                        table.Cell().Text(r.FencerStrip);
-                                        table.Cell().Text(r.FencerName);
-                                        table.Cell().AlignCenter().Text(r.Wins);
-                                        table.Cell().AlignCenter().Text(r.Losses);
-                                        table.Cell().AlignCenter().Text(r.WinPct.ToString("P1"));
-                                        table.Cell().AlignCenter().Text(r.TouchesScored);
-                                        table.Cell().AlignCenter().Text(r.TouchesReceived);
-                                        table.Cell().AlignCenter().Text((r.TouchesScored - r.TouchesReceived));
+                                        var (l, r) = boutOrder[i];
+                                        h.Cell().AlignCenter().Text($"{l}-{r}");
                                     }
                                 });
+
+                                // ── one row per fencer ──────────────────────────────────────────
+                                foreach (var f in squadsInPool.SelectMany(t => new[] { "A", "B", "C", "D" })
+                                                              .Select(strip => new {  // flatten each team→4 fencers
+                                                                  Team = squadsInPool.First(t => t.SeedinPool == int.Parse(strip == null ? "0" : strip)),
+                                                                  Strip = strip
+                                                              }))
+                                {
+                                    var seed = f.Team.SeedinPool.Value;
+                                    // skip blank rows for e.g. 4th fencer if your squad only has 3
+                                    if (f.Strip == "D" && f.Team.AltFencer == null) continue;
+
+                                    // cell 1–4
+                                    tbl.Cell().Text(seed.ToString());
+                                    tbl.Cell().Text(f.Team.ToString());
+                                    tbl.Cell().Text(f.Strip);
+                                    var name = f.Strip switch
+                                    {
+                                        "A" => f.Team.AFencer,
+                                        "B" => f.Team.BFencer,
+                                        "C" => f.Team.CFencer,
+                                        "D" => f.Team.AltFencer,
+                                        _ => ""
+                                    };
+                                    tbl.Cell().Text(name);
+
+                                    // cells 5+
+                                    for (int boutIdx = 0; boutIdx < numBouts; boutIdx++)
+                                    {
+                                        var key = (seed, f.Strip, boutIdx);
+                                        boutLookup.TryGetValue(key, out var code);
+                                        tbl.Cell()
+                                           .AlignCenter()
+                                           .Text(code ?? "");
+                                    }
+                                }
+                            });
                         });
-                    }).GeneratePdf(file);
-                MessageBox.Show($"Pool results PDF written to:\n{file}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }).GeneratePdf(Path.Combine(outputFolder, $"Pool{poolNum}_Details.pdf"));
+                    MessageBox.Show($"Pool results PDF written to:\n{file}", "Export Complete", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                };
             }
         }
 
