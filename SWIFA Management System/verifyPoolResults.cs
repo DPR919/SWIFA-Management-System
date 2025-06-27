@@ -3,7 +3,9 @@ using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using SWIFA_Management_System.Models;
+using SWIFA_Management_System.Utilities;
 using System;
+using System.CodeDom;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -121,12 +123,50 @@ namespace SWIFA_Management_System
                 }
                 string outputFolder = fbd.SelectedPath;
 
-                int poolId = ((Pool)poolSelection.SelectedItem).PoolId;
-                var results = GetFencerResultsForPool(poolId);
+                var results = GetFencerResultsForPool(_selectedPoolId);
 
-                var blade = bladeSelection.SelectedItem.ToString();
-                var poolNum = ((Pool)poolSelection.SelectedItem).PoolNum;
-                var file = Path.Combine(outputFolder, $"{blade}_Pool{poolNum}_FencerResults.pdf");
+                using (var db = new EventsDatabaseContext())
+                {
+                    var squadsInPool = db.Teams.Where(t => t.PoolId == _selectedPoolId).ToList();
+                    int numSquads = squadsInPool.Count;
+                    var seedLookup = squadsInPool.ToDictionary(t => t.TeamId, t => t.SeedinPool);
+
+                    var boutOrder = poolBoutSequenceProvider.Sequences[numSquads];
+                    var numBouts = boutOrder.Count;
+
+                    var blade = bladeSelection.SelectedItem.ToString();
+                    var poolNum = ((Pool)poolSelection.SelectedItem).PoolNum;
+                    var file = Path.Combine(outputFolder, $"{blade}_Pool{poolNum}_FencerResults.pdf");
+
+
+                    var matches = db.Matches
+                        .Where(m => m.PoolId == _selectedPoolId)
+                        .AsEnumerable()
+                        .ToList();
+
+                    var boutLookup = new Dictionary<(int Seed, string Strip, int Bout), string>();
+                    
+                    for (int boutIndex = 0; boutIndex < boutOrder.Count; boutIndex++)
+                    {
+                        var (leftSeed, rightSeed) = boutOrder[boutIndex];
+
+                        var m = matches.FirstOrDefault(x =>
+                            (seedLookup[x.TeamLeftId] == leftSeed && seedLookup[x.TeamRightId] == rightSeed)
+                            ||
+                            (seedLookup[x.TeamLeftId] == rightSeed && seedLookup[x.TeamRightId] == leftSeed)
+                        );
+
+                        if (m == null) continue;
+
+                        var codeL = (m.ScoreLeft.StartsWith("V") ? "V" : "D") + m.ScoreLeft.Substring(1);
+                        boutLookup[(leftSeed, m.FencerLeftStrip, boutIndex)] = codeL;
+
+                        var codeR = (m.ScoreRight.StartsWith("V") ? "V" : "D") + m.ScoreRight.Substring(1);
+                        boutLookup[(rightSeed, m.FencerRightStrip, boutIndex)] = codeR;
+                    }
+
+                };
+                
 
                 QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
                 QuestPDF.Fluent.Document
