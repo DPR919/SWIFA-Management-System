@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 using SWIFA_Management_System.Models;
 using SWIFA_Management_System.Utilities;
 using System;
@@ -170,7 +171,7 @@ namespace SWIFA_Management_System
                     {
                         container.Page(page =>
                         {
-                            page.Margin(20);
+                            page.Margin(10);
                             page.Size(PageSizes.Letter.Landscape());     // ← horizontal orientation
                             page.DefaultTextStyle(x => x.FontSize(9));
 
@@ -188,57 +189,94 @@ namespace SWIFA_Management_System
                                     cols.ConstantColumn(30);         // "Strip"
                                     cols.RelativeColumn(3);          // "Name"
                                                                      // now one ConstantColumn for each bout in order:
-                                    for (int i = 0; i < numBouts; i++)
-                                        cols.ConstantColumn(40);
+                                    for (int i = 0; i < boutOrder.Count; i++)
+                                    {
+                                        cols.RelativeColumn(1);     // A
+                                        cols.RelativeColumn(1);     // B
+                                        cols.RelativeColumn(1);     // C
+                                        cols.RelativeColumn(1);     // D (if applicable)
+                                    }
                                 });
 
                                 // ── header row ─────────────────────────────────────────────────
                                 tbl.Header(h =>
                                 {
-                                    h.Cell().Text("#");
-                                    h.Cell().Text("Squad");
-                                    h.Cell().Text("S");
-                                    h.Cell().Text("Name");
+                                    h.Cell().RowSpan(2).Text("#");
+                                    h.Cell().RowSpan(2).Text("Squad");
+                                    h.Cell().RowSpan(2).Text("S");
+                                    h.Cell().RowSpan(2).Text("Name");
                                     for (int i = 0; i < numBouts; i++)
                                     {
                                         var (l, r) = boutOrder[i];
-                                        h.Cell().AlignCenter().Text($"{l}-{r}");
+                                        h.Cell()
+                                         .ColumnSpan(4)
+                                         .AlignCenter()
+                                         .Text($"{l}-{r}");
+                                    };
+
+                                    h.Cell();
+                                    h.Cell();
+                                    h.Cell();
+                                    h.Cell();
+
+                                    for (int i = 0; i < boutOrder.Count; i++)
+                                    {
+                                        h.Cell().AlignCenter().Text("A");
+                                        h.Cell().AlignCenter().Text("B");
+                                        h.Cell().AlignCenter().Text("C");
+                                        h.Cell().AlignCenter().Text("D");
                                     }
+
+
                                 });
 
                                 // ── one row per fencer ──────────────────────────────────────────
-                                foreach (var f in squadsInPool.SelectMany(t => new[] { "A", "B", "C", "D" })
-                                                              .Select(strip => new {  // flatten each team→4 fencers
-                                                                  Team = squadsInPool.First(t => t.SeedinPool == int.Parse(strip == null ? "0" : strip)),
-                                                                  Strip = strip
-                                                              }))
+                                foreach (var team in squadsInPool.OrderBy(t => t.SeedinPool))
                                 {
-                                    var seed = f.Team.SeedinPool.Value;
-                                    // skip blank rows for e.g. 4th fencer if your squad only has 3
-                                    if (f.Strip == "D" && f.Team.AltFencer == null) continue;
+                                    int seed = team.SeedinPool.Value;
 
-                                    // cell 1–4
-                                    tbl.Cell().Text(seed.ToString());
-                                    tbl.Cell().Text(f.Team.ToString());
-                                    tbl.Cell().Text(f.Strip);
-                                    var name = f.Strip switch
+                                    var fencers = new List<(string Strip, string Name)>
                                     {
-                                        "A" => f.Team.AFencer,
-                                        "B" => f.Team.BFencer,
-                                        "C" => f.Team.CFencer,
-                                        "D" => f.Team.AltFencer,
-                                        _ => ""
+                                        ("A", team.AFencer),
+                                        ("B", team.BFencer),
+                                        ("C", team.CFencer)
                                     };
-                                    tbl.Cell().Text(name);
 
-                                    // cells 5+
-                                    for (int boutIdx = 0; boutIdx < numBouts; boutIdx++)
+                                    if (!string.IsNullOrWhiteSpace(team.AltFencer))
                                     {
-                                        var key = (seed, f.Strip, boutIdx);
-                                        boutLookup.TryGetValue(key, out var code);
-                                        tbl.Cell()
-                                           .AlignCenter()
-                                           .Text(code ?? "");
+                                        fencers.Add(("D", team.AltFencer));
+                                    };
+
+                                    int rowSpan = fencers.Count;
+                                    bool firstRow = true;
+
+                                    foreach (var (strip, name) in fencers)
+                                    {
+                                        if (firstRow)
+                                        {
+                                            tbl.Cell().RowSpan((uint)rowSpan).Text(team.SeedinPool.ToString());
+                                            tbl.Cell().RowSpan((uint)rowSpan).Text(team.ToString());
+                                            firstRow = false;
+                                        }
+                                        else
+                                        {
+                                            tbl.Cell().Text("");
+                                            tbl.Cell().Text("");
+                                        }
+                                        tbl.Cell().Text(strip);
+                                        tbl.Cell().Text(name);
+
+                                        for (int idx = 0; idx < boutOrder.Count; idx++)
+                                        {
+                                            if (boutLookup.TryGetValue((team.SeedinPool.Value, strip, idx), out var code))
+                                            {
+                                                tbl.Cell().AlignCenter().Text(code);
+                                            }
+                                            else
+                                            {
+                                                tbl.Cell().AlignCenter().Text("-");
+                                            }
+                                        }
                                     }
                                 }
                             });
